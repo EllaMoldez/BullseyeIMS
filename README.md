@@ -15,6 +15,6 @@ This is a group project on Inventory Management System for Bullseye
 In Progress 🚧
 
 ### 😎 Developers:
-* Tommy McLaughlin (https://github.com/TommyMclaughlin)
-* Paul Ramos (https://github.com/PaulRamos007)
-* Ella Moldez (https://github.com/EllaMoldez)
+* [Tommy McLaughlin](https://github.com/TommyMclaughlin)
+* [Paul Ramos](https://github.com/PaulRamos007)
+* [Ella Moldez](https://github.com/EllaMoldez)
