@@ -8,7 +8,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	font-family: 'Montserrat', sans-serif;
+	font-family: sans-serif, 'Montserrat';
 	height: 100vh;
 	margin: -20px 0 50px;
 	overflow: hidden; /* Hide scrollbars */
@@ -19,12 +19,16 @@ p {
 	font-weight: 100;
 	line-height: 20px;
 	letter-spacing: 0.5px;
-	margin: 20px 0 30px;
+	margin: 20px 12px 20px;
 }
 
 h1 {
 	font-weight: bold;
-	margin: 0;
+}
+
+h5 {
+	font-family: sans-serif, 'Montserrat';
+	margin-bottom: 20px;
 }
 
 .container {
@@ -79,7 +83,7 @@ h1 {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	padding: 0 40px;
+	padding: 0 4px;
 	text-align: center;
 	top: 0;
 	height: 100%;
@@ -152,5 +156,10 @@ h1 {
 }
 
 .has-error {
-    color: red
+    color: red;
+}
+
+img{
+	width: 90%;
+	padding: 4px 0;
 }
