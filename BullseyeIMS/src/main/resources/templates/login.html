@@ -15,13 +15,14 @@
 	      		<div class="overlay-panel overlay-left">
 	      		<h1>Bullseye</h1>
 	      		<h5>Inventory Management System</h5>
-	      		<img th:src="@{img/img_1.jpg}" >
+	      		<img th:src="@{images/img_1.jpg}" >
 	      		</div>
       		</div>
       	</div>
     	<div class="form-container log-in-container">
     		<form class="login-form" method="POST" th:action="@{/login}">
-        		<h2 class="form-heading">Welcome!</h2>
+        		<h2 class="form-heading">Welcome</h2>
+        		<p>Please login with your employee account</p>
 		        <div class="form-group">
 		            <span th:text="${message}"></span>
 		            <input name="username" type="text" class="form-control" placeholder="Username"

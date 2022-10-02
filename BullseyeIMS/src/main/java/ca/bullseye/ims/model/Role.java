@@ -13,8 +13,8 @@ public class Role {
 	
 	private String roleName;
 	
-	@ManyToMany(mappedBy = "roles")
-    private Set<Employee> employees;
+	@OneToOne(mappedBy = "role")
+    private Set<Employee> employee;
 
 	public int getRoleId() {
 		return roleId;
@@ -32,12 +32,12 @@ public class Role {
 		this.roleName = roleName;
 	}
 
-	public Set<Employee> getEmployees() {
-		return employees;
+	public Set<Employee> getEmployee() {
+		return employee;
 	}
 
-	public void setEmployees(Set<Employee> employees) {
-		this.employees = employees;
+	public void setEmployee(Set<Employee> employee) {
+		this.employee = employee;
 	}
 	
 	
