@@ -9,5 +9,4 @@ public class BullseyeImsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BullseyeImsApplication.class, args);
 	}
-
 }
