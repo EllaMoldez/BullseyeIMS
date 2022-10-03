@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BullseyeImsApplication {
+public class BullseyeIMSApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BullseyeImsApplication.class, args);
+		SpringApplication.run(BullseyeIMSApplication.class, args);
 	}
 }
