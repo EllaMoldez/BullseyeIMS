@@ -1,7 +1,7 @@
-/*
- * package ca.bullseye.ims.repositories;
- * 
- * public interface EmployeeRepository {
- * 
- * }
- */
+
+  package ca.bullseye.ims.repositories;
+  
+  public interface EmployeeRepository {
+  
+  }
+ 
