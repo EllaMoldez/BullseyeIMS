@@ -64,9 +64,9 @@ h5 {
 }
 
 .overlay {
-	background: #1E88E5;
-	background: -webkit-linear-gradient(to right, #1565C0, #64B5F6);
-	background: linear-gradient(to right, #1565C0, #64B5F6);
+	background: #31708f;
+	background: -webkit-linear-gradient(to right, #31708f, #64B5F6);
+	background: linear-gradient(to right, #31708f, #64B5F6);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
@@ -154,6 +154,7 @@ h5 {
 .login-form button {
     margin-top: 2px;
     width: 100%;
+    background: #1565C0;
 }
 
 .has-error {

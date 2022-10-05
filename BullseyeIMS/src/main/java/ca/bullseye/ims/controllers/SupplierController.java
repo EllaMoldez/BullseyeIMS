@@ -9,7 +9,7 @@ import ca.bullseye.ims.model.Supplier;
 import ca.bullseye.ims.services.SupplierService;
 
 @RestController
-@RequestMapping("/api") 
+@RequestMapping("/") 
 public class SupplierController {
 	@Autowired
 	SupplierService supService;
