@@ -39,7 +39,7 @@
 						</tr>
 						<tr>
 							<td>Category</td>
-							<td><select th:field="*{prodCategory}">
+							<td><select name="prodCategory">
 									<option value="0">Select Product Category</option>
 									<option th:each="prodCategory :${prodCategories}"
 										th:text="${prodCategory}">Categories
@@ -59,19 +59,19 @@
 						</tr>
 						<tr>
 							<td>Status</td>
-							<td><select th:field="*{prodStatus}">
+							<td><select name="prodStatus">
 									<option value="0">Select Product Status</option>
 									<option th:each="prodStatus :${prodStatus}"
 										th:value="${prodStatus}" th:text="${prodStatus}"></option>
 							</select></td>
 						</tr>
-
-						<td colspan="2"><a href="/product/save">
-								<button type="submit" class="btn btn-sm btn-primary">Save</button>
-						</a> <a href="/product">
-								<button type="button" class="btn btn-sm btn-danger">Cancel</button>
-						</a></td>
-
+						<tr>
+							<td colspan="2"><a href="/product/save">
+									<button type="submit" class="btn btn-sm btn-primary">Save</button>
+							</a> <a href="/product">
+									<button type="button" class="btn btn-sm btn-danger">Cancel</button>
+							</a></td>
+						</tr>
 					</table>
 				</form>
 				<div th:insert="/fragments/footer :: footer"></div>

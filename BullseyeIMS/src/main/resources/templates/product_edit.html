@@ -5,7 +5,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bullseye Inventory Management System</title>
-<!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dashboard/"> -->
 <link href="../static/css/bootstrap.min.css" rel="stylesheet"
 	th:href="@{/css/bootstrap.min.css}">
 <link href="../static/css/style.css" rel="stylesheet"
@@ -29,33 +28,40 @@
 					method="post">
 					<table border="0" cellpadding="10">
 						<tr>
-							<td>Product ID:</td>
+							<td>Product ID</td>
 							<td><input type="text" th:field="*{prodId}"
 								readonly="readonly" /></td>
 						</tr>
 						<tr>
-							<td>Product SKU:</td>
+							<td>Product SKU</td>
 							<td><input type="text" th:field="*{prodSKU}" /></td>
 						</tr>
 						<tr>
-							<td>Product Name:</td>
+							<td>Product Name</td>
 							<td><input type="text" th:field="*{prodName}" /></td>
 						</tr>
 						<tr>
-							<td>Category:</td>
+							<td>Category</td>
 							<td><input type="text" th:field="*{prodCategory}" /></td>
 						</tr>
 						<tr>
-							<td>Description:</td>
+							<td>Description</td>
 							<td><input type="text" th:field="*{prodDescription}" /></td>
 						</tr>
 						<tr>
-							<td>Color:</td>
+							<td>Color</td>
 							<td><input type="text" th:field="*{prodColor}" /></td>
 						</tr>
 						<tr>
-							<td>Price:</td>
+							<td>Price</td>
 							<td><input type="text" th:field="*{price}" /></td>
+						</tr>
+						<tr>
+							<td>Status</td>
+							<td><select name="prodStatus">
+									<option th:each="prodStatus :${prodStatus}"
+										th:value="${prodStatus}" th:field="*{prodStatus}"></option>
+							</select></td>
 						</tr>
 						<tr>
 							<td colspan="2"><a href="/product/save">

@@ -1,7 +1,6 @@
 package ca.bullseye.ims.controllers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
@@ -41,15 +40,6 @@ public class ProductController {
 	public String viewHomePage(Model model) {
 		List<Product> productList = productService.getAllProducts();
 		model.addAttribute("productList", productList);
-		/*
-		 * List<String> prodCategories = Arrays.asList("Clothing", "Footwear",
-		 * "Accessories", "Equipment", "Wellness", "Seasonal");
-		 * 
-		 * model.addAttribute("prodCategories", prodCategories);
-		 * 
-		 * List<String> prodStatus = Arrays.asList("Continued", "Discontinued");
-		 * model.addAttribute("prodStatus", prodStatus);
-		 */
 
 		return "productlist";
 	}
@@ -58,10 +48,10 @@ public class ProductController {
 	public String newProduct(Model model) {
 		Product product = new Product();
 		model.addAttribute(product);
-		
+
 		model.addAttribute("prodCategories", prodCategories);
 		model.addAttribute("prodStatus", prodStatus);
-		
+
 		return "product_new";
 	}
 
@@ -90,7 +80,7 @@ public class ProductController {
 	 */
 	@RequestMapping("/product/edit/{prodId}")
 	public ModelAndView showEditProduct(@PathVariable(name = "prodId") Long prodId) throws ProductNotFoundException {
-		ModelAndView mav = new ModelAndView("edit_product");
+		ModelAndView mav = new ModelAndView("product_edit");
 		Product product = productService.getProductById(prodId);
 		mav.addObject("product", product);
 		return mav;
@@ -102,11 +92,4 @@ public class ProductController {
 		productService.deleteProduct(prodId);
 		return "redirect:/product";
 	}
-
-	/*
-	 * // creating post mapping that post the product detail in the database
-	 * 
-	 * @PostMapping("/product") private Long saveProduct(@RequestBody Product
-	 * product) { productService.saveProduct(product); return product.getProdId(); }
-	 */
 }

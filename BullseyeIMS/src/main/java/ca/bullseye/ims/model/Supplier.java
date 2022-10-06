@@ -16,6 +16,8 @@ public class Supplier {
 	private String supAddress;
 	
 	private String supEmail;
+	
+	private String supContact;
 
 	public Long getSupId() {
 		return supId;
@@ -47,6 +49,14 @@ public class Supplier {
 
 	public void setSupEmail(String supEmail) {
 		this.supEmail = supEmail;
+	}
+
+	public String getSupContact() {
+		return supContact;
+	}
+
+	public void setSupContact(String supContact) {
+		this.supContact = supContact;
 	}
 
 	

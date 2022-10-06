@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bullseye Inventory Management System</title>
+<link href="../static/css/bootstrap.min.css" rel="stylesheet"
+	th:href="@{/css/bootstrap.min.css}">
+<link href="../static/css/style.css" rel="stylesheet"
+	th:href="@{/css/style.css}">
+<!-- Custom styles for this template -->
+<link href="../static/css/dashboard.css" rel="stylesheet"
+	th:href="@{/css/dashboard.css}">
+</head>
+<body>
+	<div th:insert="/fragments/header :: header"></div>
+	<div class="container-fluid">
+		<div class="row">
+			<div th:insert="/fragments/sidebar :: sidebar"></div>
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+					<h1 class="h2">Edit Supplier</h1>
+				</div>
+				<br />
+				<form action="#" th:action="@{/supplier/save}" th:object="${supplier}"
+					method="post">
+					<table border="0" cellpadding="10">
+						<tr>
+							<td>Supplier ID</td>
+							<td><input type="text" th:field="*{supId}"
+								readonly="readonly" /></td>
+						</tr>
+						<tr>
+							<td>Name</td>
+							<td><input type="text" th:field="*{supName}" /></td>
+						</tr>
+						<tr>
+							<td>Address</td>
+							<td><input type="text" th:field="*{supAddress}" /></td>
+						</tr>
+						<tr>
+							<td>Email</td>
+							<td><input type="text" th:field="*{supEmail}" /></td>
+						</tr>
+						<tr>
+							<td>Contact</td>
+							<td><input type="text" th:field="*{supContact}" /></td>
+						</tr>
+						<tr>
+							<td colspan="2"><a href="/supplier/save">
+									<button type="submit" class="btn btn-sm btn-primary">Save</button>
+							</a> <a href="/supplier">
+									<button type="button" class="btn btn-sm btn-danger">Cancel</button>
+							</a></td>
+						</tr>
+					</table>
+				</form>
+				<div th:insert="/fragments/footer :: footer"></div>
+			</main>
+		</div>
+	</div>
+</body>
+</html>
