@@ -245,6 +245,7 @@ sup {
 a {
   color: var(--bs-link-color);
   text-decoration: underline;
+  display: inline-block;
 }
 a:hover {
   color: var(--bs-link-hover-color);

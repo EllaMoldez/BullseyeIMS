@@ -23,8 +23,25 @@ public class Product {
 	private String prodColor;
 
 	private BigDecimal price;
-	
+
 	private String prodStatus;
+
+	public Product() {
+		super();
+	}
+
+	public Product(Long prodId, String prodSKU, String prodName, String prodCategory, String prodDescription,
+			String prodColor, BigDecimal price, String prodStatus) {
+		super();
+		this.prodId = prodId;
+		this.prodSKU = prodSKU;
+		this.prodName = prodName;
+		this.prodCategory = prodCategory;
+		this.prodDescription = prodDescription;
+		this.prodColor = prodColor;
+		this.price = price;
+		this.prodStatus = prodStatus;
+	}
 
 	public Long getProdId() {
 		return prodId;
@@ -89,7 +106,5 @@ public class Product {
 	public void setProdStatus(String prodStatus) {
 		this.prodStatus = prodStatus;
 	}
-	
-	
 
 }

@@ -30,41 +30,48 @@
 
 					<table border="0" cellpadding="10">
 						<tr>
-							<td>Product SKU:</td>
+							<td>Product SKU</td>
 							<td><input type="text" th:field="*{prodSKU}" /></td>
 						</tr>
 						<tr>
-							<td>Product Name:</td>
+							<td>Product Name</td>
 							<td><input type="text" th:field="*{prodName}" /></td>
 						</tr>
 						<tr>
-							<td>Category:</td>
-							<td><input type="text" th:field="*{prodCategory}" />
-							</td>
+							<td>Category</td>
+							<td><select th:field="*{prodCategory}">
+									<option value="0">Select Product Category</option>
+									<option th:each="prodCategory :${prodCategories}"
+										th:text="${prodCategory}">Categories
+							</select></td>
 						</tr>
 						<tr>
-							<td>Description:</td>
+							<td>Description</td>
 							<td><input type="text" th:field="*{prodDescription}" /></td>
 						</tr>
 						<tr>
-							<td>Color:</td>
+							<td>Color</td>
 							<td><input type="text" th:field="*{prodColor}" /></td>
 						</tr>
 						<tr>
-							<td>Price:</td>
+							<td>Price</td>
 							<td><input type="text" th:field="*{price}" /></td>
 						</tr>
 						<tr>
-							<td>Status:</td>
-							<td><input type="text" th:field="*{prodStatus}" /></td>
+							<td>Status</td>
+							<td><select th:field="*{prodStatus}">
+									<option value="0">Select Product Status</option>
+									<option th:each="prodStatus :${prodStatus}"
+										th:value="${prodStatus}" th:text="${prodStatus}"></option>
+							</select></td>
 						</tr>
-						<tr>
-							<td colspan="2"><a href="/product/save">
-									<button type="submit" class="btn btn-sm btn-primary">Save</button>
-							</a> <a href="/product">
-									<button type="button" class="btn btn-sm btn-danger">Cancel</button>
-							</a></td>
-						</tr>
+
+						<td colspan="2"><a href="/product/save">
+								<button type="submit" class="btn btn-sm btn-primary">Save</button>
+						</a> <a href="/product">
+								<button type="button" class="btn btn-sm btn-danger">Cancel</button>
+						</a></td>
+
 					</table>
 				</form>
 				<div th:insert="/fragments/footer :: footer"></div>

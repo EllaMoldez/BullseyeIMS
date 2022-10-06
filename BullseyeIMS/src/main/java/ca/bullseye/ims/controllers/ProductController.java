@@ -1,6 +1,7 @@
 package ca.bullseye.ims.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
@@ -18,28 +19,38 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 
-	private static List<String> categories;
+	private static List<String> prodCategories;
 	static {
-		categories = new ArrayList<>();
-		categories.add("Clothing");
-		categories.add("Footwear");
-		categories.add("Accessories");
-		categories.add("Equipment");
-		categories.add("Wellness");
-		categories.add("Seasonal");
+		prodCategories = new ArrayList<>();
+		prodCategories.add("Clothing");
+		prodCategories.add("Footwear");
+		prodCategories.add("Accessories");
+		prodCategories.add("Equipment");
+		prodCategories.add("Wellness");
+		prodCategories.add("Seasonal");
 	}
 
-	private static List<String> status;
+	private static List<String> prodStatus;
 	static {
-		status = new ArrayList<>();
-		status.add("Continued");
-		status.add("Discontinued");
+		prodStatus = new ArrayList<>();
+		prodStatus.add("Continued");
+		prodStatus.add("Discontinued");
 	}
 
-	@RequestMapping("/product")
+	@GetMapping(path = "/product")
 	public String viewHomePage(Model model) {
 		List<Product> productList = productService.getAllProducts();
 		model.addAttribute("productList", productList);
+		/*
+		 * List<String> prodCategories = Arrays.asList("Clothing", "Footwear",
+		 * "Accessories", "Equipment", "Wellness", "Seasonal");
+		 * 
+		 * model.addAttribute("prodCategories", prodCategories);
+		 * 
+		 * List<String> prodStatus = Arrays.asList("Continued", "Discontinued");
+		 * model.addAttribute("prodStatus", prodStatus);
+		 */
+
 		return "productlist";
 	}
 
@@ -47,6 +58,10 @@ public class ProductController {
 	public String newProduct(Model model) {
 		Product product = new Product();
 		model.addAttribute(product);
+		
+		model.addAttribute("prodCategories", prodCategories);
+		model.addAttribute("prodStatus", prodStatus);
+		
 		return "product_new";
 	}
 

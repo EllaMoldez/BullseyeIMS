@@ -59,13 +59,16 @@
 								<td th:text="${Product.price}">Price</td>
 								<td th:text="${Product.prodStatus}">Status</td>
 
-								<td><button type="button"
-										class="btn btn-sm btn-outline-primary">
-										<span data-feather="box" class="align-text-bottom"></span>
-									</button>
-									<a th:href="@{'/product/edit/' + ${Product.prodId}}">Edit</a>
-									&nbsp;&nbsp;&nbsp; <a
-									th:href="@{'/product/delete/' + ${Product.prodId}}">Delete</a></td>
+								<td><a th:href="@{'/product/edit/' + ${Product.prodId}}">
+										<button type="button" class="btn btn-sm btn-primary">
+											<span data-feather="edit"></span> Edit
+										</button>
+								</a> &nbsp; <a
+									th:href="@{'/product/delete/' + ${Product.prodId}}">
+										<button type="button" class="btn btn-sm btn-danger">
+											<span data-feather="trash"></span> Delete
+										</button>
+								</a></td>
 							</tr>
 						</tbody>
 					</table>
