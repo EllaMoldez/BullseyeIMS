@@ -23,22 +23,10 @@
 				<div
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 					<h1 class="h2">Create New Product</h1>
-					<!-- <div class="btn-toolbar mb-2 mb-md-0">
-						<div class="btn-group me-2">
-							<button type="button" class="btn btn-sm btn-outline-secondary">Export
-								List</button>
-						</div>
-						<a href="/new">
-							<button type="button" class="btn btn-sm btn-outline-primary">
-								<span data-feather="box" class="align-text-bottom"></span> New
-								Product
-							</button>
-						</a>
-					</div> -->
 				</div>
 				<br />
-				<form action="#" th:action="@{/save}" th:object="${product}"
-					method="post">
+				<form action="#" th:action="@{/product/save}" th:object="${product}"
+					method="POST">
 
 					<table border="0" cellpadding="10">
 						<tr>
@@ -49,12 +37,11 @@
 							<td>Product Name:</td>
 							<td><input type="text" th:field="*{prodName}" /></td>
 						</tr>
-						<!-- <tr>
+						<tr>
 							<td>Category:</td>
-							<td><select name="categories">
-									<input type="text" th:field="*{prodCategory}" />
-							</select></td>
-						</tr> -->
+							<td><input type="text" th:field="*{prodCategory}" />
+							</td>
+						</tr>
 						<tr>
 							<td>Description:</td>
 							<td><input type="text" th:field="*{prodDescription}" /></td>
@@ -72,19 +59,30 @@
 							<td><input type="text" th:field="*{prodStatus}" /></td>
 						</tr>
 						<tr>
-							<td colspan="2">
-								<button type="submit" class="btn btn-sm btn-primary">Save</button>
-								<span><button type="cancel" class="btn btn-sm btn-secondary">Cancel</button></span>
-							</td>
+							<td colspan="2"><a href="/product/save">
+									<button type="submit" class="btn btn-sm btn-primary">Save</button>
+							</a> <a href="/product">
+									<button type="button" class="btn btn-sm btn-danger">Cancel</button>
+							</a></td>
 						</tr>
 					</table>
 				</form>
-
+				<div th:insert="/fragments/footer :: footer"></div>
 			</main>
 		</div>
 	</div>
+	<script src="../static/js/bootstrap.bundle.min.js"
+		th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+		integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+		integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
+		crossorigin="anonymous"></script>
+	<script src="../static/js/dashboard.js" th:src="@{/js/dashboard.js}"></script>
 
-	<div th:insert="/fragments/footer :: footer"></div>
 
 
 </body>

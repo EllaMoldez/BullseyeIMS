@@ -36,24 +36,24 @@ public class ProductController {
 		status.add("Discontinued");
 	}
 
-	@RequestMapping("/")
+	@RequestMapping("/product")
 	public String viewHomePage(Model model) {
 		List<Product> productList = productService.getAllProducts();
 		model.addAttribute("productList", productList);
-		return "index";
+		return "productlist";
 	}
 
-	@RequestMapping("/new")
+	@RequestMapping("/product/add")
 	public String newProduct(Model model) {
 		Product product = new Product();
 		model.addAttribute(product);
 		return "product_new";
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/product/save", method = RequestMethod.POST)
 	public String saveProduct(@ModelAttribute("product") Product product) {
 		productService.saveProduct(product);
-		return "redirect:/";
+		return "redirect:/product";
 	}
 
 	/*
@@ -73,12 +73,19 @@ public class ProductController {
 	 * 
 	 * return prodToView; }
 	 */
-	@RequestMapping("edit/{prodId}")
+	@RequestMapping("/product/edit/{prodId}")
 	public ModelAndView showEditProduct(@PathVariable(name = "prodId") Long prodId) throws ProductNotFoundException {
 		ModelAndView mav = new ModelAndView("edit_product");
 		Product product = productService.getProductById(prodId);
 		mav.addObject("product", product);
 		return mav;
+	}
+
+	// creating a delete mapping that deletes a specific product
+	@RequestMapping("/product/delete/{prodId}")
+	private String deleteProduct(@PathVariable(name = "prodId") Long prodId) {
+		productService.deleteProduct(prodId);
+		return "redirect:/product";
 	}
 
 	/*
@@ -87,12 +94,4 @@ public class ProductController {
 	 * @PostMapping("/product") private Long saveProduct(@RequestBody Product
 	 * product) { productService.saveProduct(product); return product.getProdId(); }
 	 */
-
-	// creating a delete mapping that deletes a specific product
-	@RequestMapping("delete/{prodId}")
-	private String deleteProduct(@PathVariable(name = "prodId") Long prodId) {
-		productService.deleteProduct(prodId);
-		return "redirect:/";
-
-	}
 }

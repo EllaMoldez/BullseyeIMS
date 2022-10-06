@@ -1,5 +1,7 @@
+
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,6 +15,68 @@
 	th:href="@{/css/dashboard.css}">
 </head>
 <body>
+	<div th:insert="/fragments/header :: header"></div>
+	<div class="container-fluid">
+		<div class="row">
+			<div th:insert="/fragments/sidebar :: sidebar"></div>
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+					<h1 class="h2">Products</h1>
+					<div class="btn-toolbar mb-2 mb-md-0">
+						<div class="btn-group me-2">
+							<button type="button" class="btn btn-sm btn-outline-secondary">Export
+								List</button>
+						</div>
+						<a href="/new">
+							<button type="button" class="btn btn-sm btn-outline-primary">
+								<span data-feather="box" class="align-text-bottom"></span> New
+								Product
+							</button>
+						</a>
+					</div>
+				</div>
+				<br />
+				<form action="#" th:action="@{/save}" th:object="${product}"
+					method="post">
+					<table border="0">
+						<tr>
+							<td>Product ID:</td>
+							<td><input type="text" th:field="*{prodId}"
+								readonly="readonly" /></td>
+						</tr>
+						<tr>
+							<td>Product SKU:</td>
+							<td><input type="text" th:field="*{prodSKU}" /></td>
+						</tr>
+						<tr>
+							<td>Product Name:</td>
+							<td><input type="text" th:field="*{prodName}" /></td>
+						</tr>
+						<tr>
+							<td>Category:</td>
+							<td><input type="text" th:field="*{prodCategory}" /></td>
+						</tr>
+						<tr>
+							<td>Description:</td>
+							<td><input type="text" th:field="*{prodDescription}" /></td>
+						</tr>
+						<tr>
+							<td>Color:</td>
+							<td><input type="text" th:field="*{prodColor}" /></td>
+						</tr>
+						<tr>
+							<td>Price:</td>
+							<td><input type="text" th:field="*{price}" /></td>
+						</tr>
+						<tr>
+							<td colspan="2"><button type="submit">Save</button></td>
+						</tr>
+					</table>
+				</form>
+			</main>
+		</div>
+	</div>
 
 </body>
 </html>

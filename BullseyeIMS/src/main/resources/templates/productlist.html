@@ -28,7 +28,7 @@
 							<button type="button" class="btn btn-sm btn-outline-secondary">Export
 								List</button>
 						</div>
-						<a href="/new">
+						<a href="/product/add">
 							<button type="button" class="btn btn-sm btn-outline-primary">
 								<span data-feather="box" class="align-text-bottom"></span> New
 								Product
@@ -59,11 +59,13 @@
 								<td th:text="${Product.price}">Price</td>
 								<td th:text="${Product.prodStatus}">Status</td>
 
-								<td><button type="button" class="btn btn-sm btn-outline-primary">
-								<span data-feather="box" class="align-text-bottom"></span> Edit
-							</button><a th:href="@{'/edit/' + ${Product.prodId}}">Edit</a>
+								<td><button type="button"
+										class="btn btn-sm btn-outline-primary">
+										<span data-feather="box" class="align-text-bottom"></span>
+									</button>
+									<a th:href="@{'/product/edit/' + ${Product.prodId}}">Edit</a>
 									&nbsp;&nbsp;&nbsp; <a
-									th:href="@{'/delete/' + ${Product.prodId}}">Delete</a></td>
+									th:href="@{'/product/delete/' + ${Product.prodId}}">Delete</a></td>
 							</tr>
 						</tbody>
 					</table>
