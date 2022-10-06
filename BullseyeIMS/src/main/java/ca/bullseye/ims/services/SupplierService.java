@@ -19,7 +19,7 @@ public class SupplierService {
 		return supRepository.save(supplier);
 	}
 	
-	// READ
+	//READ
 	public List<Supplier> getAllSuppliers() {
 	    return supRepository.findAll();
 	}
