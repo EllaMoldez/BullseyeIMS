@@ -2,21 +2,20 @@ package ca.bullseye.ims.model;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table
 public class Supplier {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long supId;
-	
+
 	private String supName;
-	
+
 	private String supAddress;
 	
 	private String supEmail;
-	
+
 	private String supContact;
 
 	public Long getSupId() {
@@ -60,4 +59,5 @@ public class Supplier {
 	}
 
 	
+
 }

@@ -1,10 +1,10 @@
 body {
-  font-size: .900rem;
+  font-size: .875rem;
 }
 
 .feather {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 /*
@@ -13,7 +13,7 @@ body {
 
 .sidebar {
   position: fixed;
-  top: 10px;
+  top: 0;
   /* rtl:raw:
   right: 0;
   */
