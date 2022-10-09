@@ -2,9 +2,13 @@ package ca.bullseye.ims.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,7 +41,7 @@ public class ProductController {
 	}
 
 	@GetMapping(path = "/product")
-	public String viewHomePage(Model model) {
+	public String viewProductPage(Model model) {
 		List<Product> productList = productService.getAllProducts();
 		model.addAttribute("productList", productList);
 
@@ -56,8 +60,12 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/product/save", method = RequestMethod.POST)
-	public String saveProduct(@ModelAttribute("product") Product product) {
+	public String saveProduct(@Valid Product products, BindingResult result, @ModelAttribute("product") Product product) {
+		if(result.hasErrors()) {
+			return "product_new";
+		}
 		productService.saveProduct(product);
+	
 		return "redirect:/product";
 	}
 
@@ -78,7 +86,7 @@ public class ProductController {
 	 * 
 	 * return prodToView; }
 	 */
-	@RequestMapping("/product/edit/{prodId}")
+	@RequestMapping(value = "/product/edit/{prodId}",  method = RequestMethod.GET)
 	public ModelAndView showEditProduct(@PathVariable(name = "prodId") Long prodId) throws ProductNotFoundException {
 		ModelAndView mav = new ModelAndView("product_edit");
 		Product product = productService.getProductById(prodId);
@@ -87,7 +95,7 @@ public class ProductController {
 	}
 
 	// creating a delete mapping that deletes a specific product
-	@RequestMapping("/product/delete/{prodId}")
+	@RequestMapping(value = "/product/delete/{prodId}")
 	private String deleteProduct(@PathVariable(name = "prodId") Long prodId) {
 		productService.deleteProduct(prodId);
 		return "redirect:/product";

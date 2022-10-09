@@ -1,5 +1,7 @@
 package ca.bullseye.ims.model;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,10 +15,14 @@ public class Supplier {
 	private String supName;
 
 	private String supAddress;
-	
+
 	private String supEmail;
 
 	private String supContact;
+
+	/*
+	 * @OneToMany(mappedBy = "supplier") private Set <Product> product;
+	 */
 
 	public Long getSupId() {
 		return supId;
@@ -58,6 +64,13 @@ public class Supplier {
 		this.supContact = supContact;
 	}
 
+	/*
+	 * public Set<Product> getProduct() { return product; }
+	 * 
+	 * public void setProduct(Set<Product> product) { this.product = product; }
+	 */
+
 	
 
+	
 }

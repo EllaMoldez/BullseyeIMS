@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bullseye Inventory Management System</title>
+<link href="../static/css/bootstrap.min.css" rel="stylesheet"
+	th:href="@{/css/bootstrap.min.css}">
+<link href="../static/css/style.css" rel="stylesheet"
+	th:href="@{/css/style.css}">
+<!-- Custom styles for this template -->
+<link href="../static/css/dashboard.css" rel="stylesheet"
+	th:href="@{/css/dashboard.css}">
+</head>
+<body>
+	<div th:insert="/fragments/header :: header"></div>
+	<div class="container-fluid">
+		<div class="row">
+			<div th:insert="/fragments/sidebar :: sidebar"></div>
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+					<h1 class="h2">Edit Product</h1>
+				</div>
+				<br />
+				<form action="#" th:action="@{/product/save}" th:object="${product}"
+					method="post">
+					<table border="0" cellpadding="10">
+						<tr>
+							<td>Product ID</td>
+							<td><input type="text" th:field="*{prodId}"
+								readonly="readonly" /></td>
+						</tr>
+						<tr>
+							<td>Product SKU</td>
+							<td><input type="text" th:field="*{prodSKU}" /></td>
+						</tr>
+						<tr>
+							<td>Product Name</td>
+							<td><input type="text" th:field="*{prodName}" /></td>
+						</tr>
+						<tr>
+							<td>Category</td>
+							<td><input type="text" th:field="*{prodCategory}" /></td>
+						</tr>
+						<tr>
+							<td>Description</td>
+							<td><input type="text" th:field="*{prodDescription}" /></td>
+						</tr>
+						<tr>
+							<td>Color</td>
+							<td><input type="text" th:field="*{prodColor}" /></td>
+						</tr>
+						<tr>
+							<td>Price</td>
+							<td><input type="text" th:field="*{prodPrice}" /></td>
+						</tr>
+						<tr>
+							<td>Status</td>
+							<td><select name="prodStatus">
+									<option th:each="prodStatus :${prodStatus}"
+										th:value="${prodStatus}" th:field="*{prodStatus}"></option>
+							</select></td>
+						</tr>
+						<tr>
+							<td colspan="2"><a href="/product/save">
+									<button type="submit" class="btn btn-sm btn-primary">Save</button>
+							</a> <a href="/product">
+									<button type="button" class="btn btn-sm btn-danger">Cancel</button>
+							</a></td>
+						</tr>
+					</table>
+				</form>
+				<div th:insert="/fragments/footer :: footer"></div>
+			</main>
+		</div>
+	</div>
+</body>
+</html>
