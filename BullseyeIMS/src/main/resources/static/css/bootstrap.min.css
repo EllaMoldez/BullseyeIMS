@@ -22,7 +22,7 @@
 	--white: #fff; 
 	--gray: #6c757d; 
 	--gray-dark: #343a40; 
-	--primary: #007bff; 
+	--primary: #07689F; 
 	--secondary: #6c757d; 
 	--success: #28a745;
 	--info: #17a2b8; 
@@ -286,6 +286,9 @@ input[type="checkbox"], input[type="radio"] {
 	padding: 0;
 }
 
+.radioMarginRight{
+	margin: 10px;
+}
 textarea {
 	overflow: auto;
 	resize: vertical;
@@ -2563,8 +2566,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 .btn-primary {
 	color: #fff;
-	background-color: #07689F;
-	border-color: #07689F;
+	background-color: #0d70ad;
+	border-color: #0d70ad;
 }
 
 .btn-primary:hover {
@@ -2575,8 +2578,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 .btn-primary.focus, .btn-primary:focus {
 	color: #fff;
-	background-color: #0069d9;
-	border-color: #0062cc;
+	background-color: #0d70ad;
+	border-color: #0d70ad;
 	box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
 
@@ -2589,8 +2592,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active,
 	.show>.btn-primary.dropdown-toggle {
 	color: #fff;
-	background-color: #0062cc;
-	border-color: #005cbf;
+	background-color: #0d70ad;
+	border-color: #0d70ad;
 }
 
 .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus,

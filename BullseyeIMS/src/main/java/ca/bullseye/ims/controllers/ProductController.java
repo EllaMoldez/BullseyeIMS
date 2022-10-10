@@ -33,15 +33,13 @@ public class ProductController {
 		prodCategories.add("Seasonal");
 	}
 
-	private static List<String> prodStatus;
-	static {
-		prodStatus = new ArrayList<>();
-		prodStatus.add("Continued");
-		prodStatus.add("Discontinued");
-	}
+	/*
+	 * private static List<String> prodStatus; static { prodStatus = new
+	 * ArrayList<>(); prodStatus.add("Continued"); prodStatus.add("Discontinued"); }
+	 */
 
 	@GetMapping(path = "/product")
-	public String viewProductPage(Model model) {
+	public String viewProductList(Model model) {
 		List<Product> productList = productService.getAllProducts();
 		model.addAttribute("productList", productList);
 
@@ -54,7 +52,7 @@ public class ProductController {
 		model.addAttribute(product);
 
 		model.addAttribute("prodCategories", prodCategories);
-		model.addAttribute("prodStatus", prodStatus);
+		/* model.addAttribute("prodStatus", prodStatus); */
 
 		return "product_new";
 	}
@@ -87,7 +85,7 @@ public class ProductController {
 	 * return prodToView; }
 	 */
 	@RequestMapping(value = "/product/edit/{prodId}",  method = RequestMethod.GET)
-	public ModelAndView showEditProduct(@PathVariable(name = "prodId") Long prodId) throws ProductNotFoundException {
+	public ModelAndView editProduct(@PathVariable(name = "prodId") Long prodId, @Valid Product products, BindingResult result) throws ProductNotFoundException {
 		ModelAndView mav = new ModelAndView("product_edit");
 		Product product = productService.getProductById(prodId);
 		mav.addObject("product", product);

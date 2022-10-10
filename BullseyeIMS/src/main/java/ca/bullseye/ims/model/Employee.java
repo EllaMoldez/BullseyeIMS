@@ -15,6 +15,8 @@ public class Employee {
 	private String empContact;
 	private String empDepartment;
 	private String empJobRole;
+	
+	
 	public Long getEmpId() {
 		return empId;
 	}
@@ -57,7 +59,5 @@ public class Employee {
 	public void setEmpJobRole(String empJobRole) {
 		this.empJobRole = empJobRole;
 	}
-	
-	
 	
 }

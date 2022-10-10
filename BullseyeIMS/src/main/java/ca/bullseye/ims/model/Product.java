@@ -28,7 +28,7 @@ public class Product {
 
 	private String prodDescription;
 	
-	@NotNull
+	@NotNull(message = "Product size cannot be empty.")
 	private int prodSize;
 	
 	@NotEmpty(message = "Product color cannot be empty.")
@@ -37,7 +37,7 @@ public class Product {
 	@NotEmpty(message = "Product location cannot be empty.")
 	private String prodLocation;
 	
-	
+	@Digits(integer=8, fraction=2)
 	private BigDecimal prodPrice;
 	
 	@NotEmpty(message = "Product status cannot be empty.")

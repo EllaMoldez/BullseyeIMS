@@ -27,7 +27,7 @@
 		<div class="row row-offcanvas row-offcanvas-left ">
 			<div class="col-md-3 col-lg-2 sidebar-offcanvas vh-100 bg-light pl-0"
 				id="sidebar" role="navigation">
-				<div th:insert="/fragments/side :: side"></div>
+				<div th:insert="/fragments/sidebar :: sidebar"></div>
 			</div>
 			<div class="col main pt-5 mt-3">
 				<h1 class="display-5 d-none d-sm-block">Create New Product</h1>
@@ -36,19 +36,21 @@
 				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-md-12">
-							<form th:action="@{/product/save}" th:object="${product}"
+							<form class="form-group" th:action="@{/product/save}" th:object="${product}"
 								method="POST">
 
 								<div class="row align-items-center mt-3">
 									<label class="control-label col-sm-1">SKU</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control"
-											placeholder="Product SKU" th:field="*{prodSKU}">
+											placeholder="Product SKU" th:field="*{prodSKU}"> 
+											<span th:if="${#fields.hasErrors('prodSKU')}" th:errors="*{prodSKU}"></span>
 									</div>
 									<label class="control-label col-sm-1">Name</label>
 									<div class="col-sm-6">
 										<input type="text" class="form-control"
 											placeholder="Product Name" th:field="*{prodName}">
+
 									</div>
 								</div>
 
@@ -105,7 +107,7 @@
 											format</small>
 									</div>
 								</div>
-
+								<!-- 
 								<div class="row align-items-center mt-3">
 									<label class="control-label col-sm-1">Status</label>
 									<div class="col-sm-5">
@@ -114,6 +116,16 @@
 											<option th:each="prodStatus :${prodStatus}"
 												th:text="${prodStatus}">Status
 										</select>
+									</div>
+								</div> -->
+
+								<div class="row align-items-center mt-3">
+									<label class="control-label col-sm-1">Status</label>
+									<div class="col-sm-5">
+										<input type="radio" th:field="*{prodStatus}" value="Continued" />
+										Continued &nbsp;&nbsp; <input type="radio"
+											th:field="*{prodStatus}" value="Discontinued" />
+										Discontinued
 									</div>
 								</div>
 
