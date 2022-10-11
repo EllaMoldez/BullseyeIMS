@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title></title>
 </head>
 <body>
 	<nav th:fragment="navbar"
@@ -12,8 +12,7 @@
 				data-toggle="offcanvas" title="Toggle responsive left sidebar">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<a class="navbar-brand"
-				title="Bullseye">Bullseye IMS</a>
+			<a class="navbar-brand" title="Bullseye">Bullseye IMS</a>
 		</div>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#collapsingNavbar">
@@ -26,10 +25,11 @@
 				</a></li>
 			</ul> -->
 			<ul class="navbar-nav ml-auto">
-			<li class="nav-item"><a class="nav-link" href="#myAlert"
-					data-toggle="collapse">Home</a></li>
+				<li class="nav-item"><a class="nav-link" href="/product"
+					data-toggle="collapse tooltip" data-placement="bottom" title="Home"><i
+						class="fa-solid fa-house"></i></a></li>
 				<li class="nav-item"><a class="nav-link" href="#myAlert"
-					data-toggle="collapse">Username</a></li>
+					data-toggle="collapse"><i class="fa-solid fa-user"></i></a></li>
 				<li class="nav-item"><a class="nav-link" href=""
 					data-target="#myModal" data-toggle="modal">Signout</a></li>
 			</ul>

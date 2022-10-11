@@ -199,6 +199,7 @@ pre {
 	-ms-overflow-style: scrollbar;
 }
 
+
 figure {
 	margin: 0 0 1rem;
 }
@@ -284,6 +285,14 @@ select {
 input[type="checkbox"], input[type="radio"] {
 	box-sizing: border-box;
 	padding: 0;
+}
+
+.pull-left{
+	margin-left: -60px;
+}
+
+.pull-left1{
+	margin-left: -45px;
 }
 
 .radioMarginRight{
@@ -607,8 +616,8 @@ pre code {
 	.col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
 	position: relative;
 	width: 100%;
-	padding-right: 15px;
-	padding-left: 15px;
+	padding-right: 14px;
+	padding-left: 14px;
 }
 
 .col {
@@ -897,11 +906,13 @@ pre code {
 		width: auto;
 		max-width: 100%;
 	}
+	
 	.col-sm-1 {
 		-ms-flex: 0 0 8.333333%;
 		flex: 0 0 8.333333%;
 		max-width: 8.333333%;
 	}
+	
 	.col-sm-2 {
 		-ms-flex: 0 0 16.666667%;
 		flex: 0 0 16.666667%;
@@ -946,6 +957,11 @@ pre code {
 		-ms-flex: 0 0 83.333333%;
 		flex: 0 0 83.333333%;
 		max-width: 80.333333%;
+	}
+	.col-sm-10n {
+		-ms-flex: 0 0 80.733333%;
+		flex: 0 0 80.733333%;
+		max-width: 80.733333%;
 	}
 	.col-sm-11 {
 		-ms-flex: 0 0 91.666667%;

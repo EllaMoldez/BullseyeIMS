@@ -29,57 +29,73 @@
 				<div th:insert="/fragments/sidebar :: sidebar"></div>
 			</div>
 			<div class="col main pt-5 mt-3">
-				<h1 class="display-5 d-none d-sm-block">Edit Supplier</h1>
+				<h1 class="display-5 d-none d-sm-block">Edit Employee</h1>
 
 				<hr>
 				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-md-12">
-							<form th:action="@{/supplier/save}" th:object="${supplier}"
-								method="POST">
-
+							<form class="form-group" th:action="@{/employee/save}"
+								th:object="${employee}" method="POST">
+								
 								<div class="row align-items-center mt-3">
-									<label class="control-label col-sm-1">Supplier ID</label>
-									<div class="col-sm-5">
-										<input type="text" class="form-control" th:field="*{supId}"
+									<label class="control-label col-sm-2">Employee ID</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" th:field="*{empId}"
 											readonly="readonly">
 									</div>
 								</div>
 
 								<div class="row align-items-center mt-3">
-									<label class="control-label col-sm-1">Name</label>
-									<div class="col-sm-11">
-										<input type="text" class="form-control" th:field="*{supName}">
+									<label class="control-label col-sm-2">First Name</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control"
+											th:field="*{empFirstName}">
+									</div>
+									<label class="control-label col-sm-2">Last Name</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control"
+											th:field="*{empLastName}">
 									</div>
 								</div>
 
 								<div class="row align-items-center mt-3">
-									<label class="control-label col-sm-1">Address</label>
-									<div class="col-sm-11">
+									<label class="control-label col-sm-2">Email</label>
+									<div class="col-sm-4">
+										<input type="email" class="form-control"
+											th:field="*{empEmail}">
+									</div>
+									<label class="control-label col-sm-2">Contact Number</label>
+									<div class="col-sm-4">
 										<input type="text" class="form-control"
-											th:field="*{supAddress}">
+											th:field="*{empContact}">
 									</div>
 								</div>
 
 								<div class="row align-items-center mt-3">
-									<label class="control-label col-sm-1">Email</label>
-									<div class="col-sm-5">
-										<input type="text" class="form-control"
-											th:field="*{supEmail}">
+									<label class="control-label col-sm-2">Department</label>
+									<div class="col-sm-4">
+										<select class="form-control" name="empDepartment">
+											<option selected>Select Department</option>
+											<option th:each="empDepartment :${empDepartment}"
+												th:value="${empDepartment}" th:text="${empDepartment}">Department
+										</select>
 									</div>
-
-									<label class="control-label col-sm-1">Contact</label>
-									<div class="col-sm-5">
-										<input type="text" class="form-control"
-											th:field="*{supContact}">
+									<label class="control-label col-sm-2">Job Role</label>
+									<div class="col-sm-4">
+										<select class="form-control" name="empJobRole">
+											<option selected>Select Job Role</option>
+											<option th:each="empJobRole :${empJobRole}"
+												th:value="${empJobRole" th:text="${empJobRole}">Job Role
+										</select>
 									</div>
 								</div>
 
 								<div class="row justify-content-start mt-4">
 									<div class="col">
-										<a href="/supplier/save">
+										<a href="/employee/save">
 											<button type="submit" class="btn btn-success">Save</button>
-										</a> <a href="/supplier">
+										</a> <a href="/employee">
 											<button type="button" class="btn btn-danger">Cancel</button>
 										</a>
 									</div>
@@ -91,6 +107,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<!--footer-->
 	<footer class="container-fluid fixed-bottom">
 		<p class="text-center">©2022 Bullseye IMS. Developed by Dartworks</p>
