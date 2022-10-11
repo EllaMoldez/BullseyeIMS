@@ -1,8 +1,7 @@
 package ca.bullseye.ims.model;
 
-import java.util.Set;
-
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 @Table
@@ -15,7 +14,8 @@ public class Supplier {
 	private String supName;
 
 	private String supAddress;
-
+	
+	@Email
 	private String supEmail;
 
 	private String supContact;
