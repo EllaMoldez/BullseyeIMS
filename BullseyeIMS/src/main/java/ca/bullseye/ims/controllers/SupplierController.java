@@ -3,13 +3,14 @@ package ca.bullseye.ims.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import ca.bullseye.ims.exceptions.ProductNotFoundException;
 import ca.bullseye.ims.model.Supplier;
 import ca.bullseye.ims.services.SupplierService;
 
@@ -17,47 +18,69 @@ import ca.bullseye.ims.services.SupplierService;
 public class SupplierController {
 
 	@Autowired
-	SupplierService supplierService;
-	
-	
-	//list of all suppliers
-	@RequestMapping(path = "/supplier")
-	public String viewSupplier(Model model) {
-		List<Supplier> supplierList = supplierService.getAllSuppliers();
-		model.addAttribute("supplierList", supplierList);
+	private SupplierService supplierService;
 
-		return "supplierlist";
+	// display list of suppliers
+	@GetMapping(path = "/supplier")
+	public String viewSupplierList(Model model) {
+		return findPaginated(1, "supName", "asc", model);
 	}
-	
-	//create new supplier	
-	@RequestMapping("/supplier/add")
-	public String newProduct(Model model) {
+
+	// show new supplier page
+	@GetMapping(path = "/supplier/add")
+	public String newSupplier(Model model) {
+		// create model attribute to bind form data
 		Supplier supplier = new Supplier();
 		model.addAttribute(supplier);
-
 		return "supplier_new";
 	}
-	
-	//save changes on supplier details
-	@RequestMapping(value = "/supplier/save", method = RequestMethod.POST)
-	public String saveSupplier(@ModelAttribute("supplier") Supplier supplier) {
+
+	// save supplier to database
+	@RequestMapping(path = "/supplier/save", method = RequestMethod.POST)
+	public String saveSupplier(@Valid Supplier sup, BindingResult result, Supplier supplier) {
+		if(result.hasErrors()) {
+			return "supplier_new";
+		}
 		supplierService.saveSupplier(supplier);
 		return "redirect:/supplier";
 	}
-	
-	//edit a supplier details
-	@RequestMapping("/supplier/edit/{supId}")
-	public ModelAndView EditSupplier(@PathVariable(name = "supId") Long supId) throws ProductNotFoundException {
-		ModelAndView mav = new ModelAndView("supplier_edit");
+
+	@GetMapping(path = "/supplier/edit/{supId}")
+	public String editSupplier(@PathVariable(value = "supId") Long supId, Model model) {
+		// get supplier from the service
 		Supplier supplier = supplierService.getSupplierById(supId);
-		mav.addObject("supplier", supplier);
-		return mav;
+
+		// set supplier as a model attribute to pre-populate the form
+		model.addAttribute("supplier", supplier);
+		return "/supplier_edit";
 	}
 
 	// deletes a specific supplier
-	@RequestMapping("supplier/delete/{supId}")
+	@GetMapping(path = "supplier/delete/{supId}")
 	private String deleteSupplier(@PathVariable(name = "supId") Long supId) {
+		// call delete employee method
 		supplierService.deleteSupplier(supId);
 		return "redirect:/supplier";
+	}
+
+	// pagination and sorting
+	@GetMapping("/page/{pageNo}")
+	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("sortField") String sortField,
+			@RequestParam("sortDirection") String sortDirection, Model model) {
+		int pageSize = 6;
+
+		Page<Supplier> page = supplierService.findPaginated(pageNo, pageSize, sortField, sortDirection);
+		List<Supplier> supplierList = page.getContent();
+
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDirection", sortDirection);
+		model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
+
+		model.addAttribute("supplierList", supplierList);
+		return "supplierlist";
 	}
 }

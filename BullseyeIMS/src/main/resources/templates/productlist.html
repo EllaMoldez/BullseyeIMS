@@ -13,7 +13,6 @@
 	th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" href="../static/css/main.css"
 	th:href="@{/css/main.css}">
-	
 <body>
 	<!-- Navbar -->
 	<div th:insert="/fragments/navbar :: navbar"></div>
@@ -25,19 +24,23 @@
 				id="sidebar" role="navigation">
 				<div th:insert="/fragments/sidebar :: sidebar"></div>
 			</div>
-			
+
 			<div class="col main pt-5 mt-3">
-				<h1 class="display-5 d-none d-sm-block h3">Products</h1>
-				<div class="btn">
-					<button type="button" class="btn btn-sm btn-secondary">Export
-						List</button>
-					<a href="/product/add">
-						<button type="button" class="btn btn-sm btn-primary">
-							<span data-feather="box" class="align-text-bottom"></span> New
-							Product
-						</button>
-					</a>
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+					<h1 class="display-5 d-none d-sm-block h3">Products</h1>
+					<div class="btn">
+						<button type="button" class="btn btn-sm btn-secondary">Export
+							List</button>
+						<a href="/product/add">
+							<button type="button" class="btn btn-sm btn-primary">
+								<span data-feather="box" class="align-text-bottom"></span> New
+								Product
+							</button>
+						</a>
+					</div>
 				</div>
+
 				<div>
 					<div class="table-responsive">
 						<table class="table table-striped">
@@ -90,7 +93,7 @@
 	<script src="https://kit.fontawesome.com/a69fb56bf5.js"
 		crossorigin="anonymous"></script>
 	<script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
-	
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

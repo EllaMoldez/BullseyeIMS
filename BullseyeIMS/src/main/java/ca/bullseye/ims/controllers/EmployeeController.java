@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import ca.bullseye.ims.exceptions.ProductNotFoundException;
+import ca.bullseye.ims.exceptions.RecordNotFoundException;
 import ca.bullseye.ims.model.Employee;
 
 import ca.bullseye.ims.services.EmployeeService;
@@ -69,11 +69,13 @@ public class EmployeeController {
 	public String saveEmployee(@ModelAttribute("employee") Employee employee) {
 		
 		employeeService.saveEmployee(employee);
+
+		
 		return "redirect:/employee";
 	}
 	
 	@RequestMapping(path = "/employee/edit/{empId}",  method = RequestMethod.GET)
-	public ModelAndView editEmployee(@PathVariable(name = "empId") Long empId, @Valid Employee employees, BindingResult result) throws ProductNotFoundException {
+	public ModelAndView editEmployee(@PathVariable(name = "empId") Long empId, @Valid Employee employees, BindingResult result) throws RecordNotFoundException {
 		ModelAndView mav = new ModelAndView("employee_edit");
 		Employee employee = employeeService.getEmployeeById(empId);
 		mav.addObject("employee", employee);

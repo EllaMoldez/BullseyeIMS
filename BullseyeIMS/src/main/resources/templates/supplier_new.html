@@ -42,7 +42,9 @@
 									<label class="control-label col-sm-1">Name</label>
 									<div class="col-sm-11">
 										<input type="text" class="form-control"
-											placeholder="Supplier Name" th:field="*{supName}">
+											placeholder="Supplier Name" th:field="*{supName}"> <br><p
+											th:if="${#fields.hasErrors('supName')}"
+											th:errors="*{supName}"></p>
 									</div>
 								</div>
 
@@ -51,6 +53,9 @@
 									<div class="col-sm-11">
 										<input type="text" class="form-control"
 											placeholder="Supplier Address" th:field="*{supAddress}">
+											<p
+											th:if="${#fields.hasErrors('supAddress')}"
+											th:errors="*{supAddress}">
 									</div>
 								</div>
 
@@ -62,12 +67,12 @@
 									</div>
 									<label class="control-label col-sm-1">Contact</label>
 									<div class="col-sm-5">
-										<input type="text" class="form-control" placeholder="Contact Number"
-											th:field="*{supContact}">
+										<input type="text" class="form-control"
+											placeholder="Contact Number" th:field="*{supContact}">
 									</div>
 								</div>
 
-							<div class="row justify-content-start mt-4">
+								<div class="row justify-content-start mt-4">
 									<div class="col">
 										<a href="/supplier/save">
 											<button type="submit" class="btn btn-success">Save</button>
@@ -87,11 +92,11 @@
 	<footer class="container-fluid fixed-bottom">
 		<p class="text-center">©2022 Bullseye IMS. Developed by Dartworks</p>
 	</footer>
-<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
 	<script src="https://kit.fontawesome.com/a69fb56bf5.js"
 		crossorigin="anonymous"></script>
 	<script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
-	
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

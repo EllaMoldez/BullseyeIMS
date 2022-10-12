@@ -12,7 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import ca.bullseye.ims.exceptions.ProductNotFoundException;
+import ca.bullseye.ims.exceptions.RecordNotFoundException;
 import ca.bullseye.ims.model.Product;
 import ca.bullseye.ims.services.ProductService;
 
@@ -85,7 +85,7 @@ public class ProductController {
 	 * return prodToView; }
 	 */
 	@RequestMapping(value = "/product/edit/{prodId}",  method = RequestMethod.GET)
-	public ModelAndView editProduct(@PathVariable(name = "prodId") Long prodId, @Valid Product products, BindingResult result) throws ProductNotFoundException {
+	public ModelAndView editProduct(@PathVariable(name = "prodId") Long prodId, @Valid Product products, BindingResult result) throws RecordNotFoundException {
 		ModelAndView mav = new ModelAndView("product_edit");
 		Product product = productService.getProductById(prodId);
 		mav.addObject("product", product);

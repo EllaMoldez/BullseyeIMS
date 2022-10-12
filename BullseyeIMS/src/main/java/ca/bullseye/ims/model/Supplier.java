@@ -1,7 +1,7 @@
 package ca.bullseye.ims.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
+import javax.validation.constraints.*;
 
 @Entity
 @Table
@@ -11,13 +11,18 @@ public class Supplier {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long supId;
 
+	@NotBlank(message = "Supplier name is required.")
+	@Size(min = 2, max = 250)
 	private String supName;
 
+	@NotBlank(message = "Supplier address is required.")
 	private String supAddress;
-	
+
+	@NotBlank(message = "Supplier email is required.")
 	@Email
 	private String supEmail;
 
+	@NotBlank(message = "Supplier contact number is required.")
 	private String supContact;
 
 	/*
@@ -63,14 +68,4 @@ public class Supplier {
 	public void setSupContact(String supContact) {
 		this.supContact = supContact;
 	}
-
-	/*
-	 * public Set<Product> getProduct() { return product; }
-	 * 
-	 * public void setProduct(Set<Product> product) { this.product = product; }
-	 */
-
-	
-
-	
 }

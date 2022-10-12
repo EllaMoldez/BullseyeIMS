@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.bullseye.ims.exceptions.ProductNotFoundException;
+import ca.bullseye.ims.exceptions.RecordNotFoundException;
 import ca.bullseye.ims.model.Product;
 import ca.bullseye.ims.repositories.ProductRepository;
 
@@ -25,11 +25,11 @@ public class ProductService {
 	}
 
 	// getting a specific product record
-	public Product getProductById(Long id) throws ProductNotFoundException {
+	public Product getProductById(Long id) throws RecordNotFoundException {
 		if (productRepository.findById((Long) id).isPresent()) {
 			return productRepository.findById((Long) id).get();
 		} else if (productRepository.findById((Long) id).isEmpty()) {
-			throw new ProductNotFoundException("" + id);
+			throw new RecordNotFoundException("" + id);
 		}
 		return null;
 	}

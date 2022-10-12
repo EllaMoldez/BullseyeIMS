@@ -69,8 +69,8 @@
 									<div class="col-sm-4">
 										<select class="form-control pull-left" name="empDepartment">
 											<option selected>Select Department</option>
-											<option th:each="empDepartment :${empDepartment}"
-												th:text="${empDepartment}">Department
+											<option th:each="empDepartment :${empDepartment}" th:value="${empDepartment}"
+												th:text="${empDepartment}">Department</option>
 										</select>
 									</div>
 									<label class="control-label col-sm-2">Job Role</label>
@@ -99,7 +99,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!--footer-->
 	<footer class="container-fluid fixed-bottom">
 		<p class="text-center">©2022 Bullseye IMS. Developed by Dartworks</p>

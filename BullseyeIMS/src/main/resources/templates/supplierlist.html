@@ -30,26 +30,33 @@
 			</div>
 
 			<div class="col main pt-5 mt-3">
-				<h1 class="display-5 d-none d-sm-block h3">Suppliers</h1>
-				<div class="btn">
-					<button type="button" class="btn btn-sm btn-secondary">Export
-						List</button>
-					<a href="/supplier/add">
-						<button type="button" class="btn btn-sm btn-primary">
-							<span data-feather="box" class="align-text-bottom"></span> New
-							Supplier
-						</button>
-					</a>
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+					<h1 class="display-5 d-none d-sm-block h3">Suppliers</h1>
+					<div class="btn">
+						<button type="button" class="btn btn-sm btn-secondary">Export
+							List</button>
+						<a th:href="@{/supplier/add}">
+							<button type="button" class="btn btn-sm btn-primary">New
+								Supplier</button>
+						</a>
+					</div>
 				</div>
+
 				<div>
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<thead class="thead-inverse">
 								<tr>
-									<th>Supplier ID</th>
-									<th>Name</th>
+									<th><a
+										th:href="@{'/page/' + ${currentPage} + '?sortField=supId&sortDirection=' + ${reverseSortDirection}}">Supplier
+											ID</a></th>
+									<th><a
+										th:href="@{'/page/' + ${currentPage} + '?sortField=supName&sortDirection=' + ${reverseSortDirection}}">Name</a></a></th>
 									<th>Address</th>
-									<th>Email</th>
+									<th><a
+										th:href="@{'/page/' + ${currentPage} + '?sortField=supEmail&sortDirection=' + ${reverseSortDirection}}">
+											Email</a></th>
 									<th>Contact</th>
 									<th></th>
 								</tr>
@@ -74,6 +81,34 @@
 								</tr>
 							</tbody>
 						</table>
+
+						<!-- pagination -->
+
+						<div th:if="${totalPages > 1}"
+							class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+							<div class="row col-sm-10">
+								<div class="col-sm-2 ">Total Rows: [[${totalItems}]]</div>
+								<div class="col-sm-1">
+									<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+										<a th:if="${currentPage != i}"
+										th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
+										<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;
+										&nbsp;
+									</span>
+								</div>
+								<div class="col-sm-1">
+									<a th:if="${currentPage < totalPages}"
+										th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Next</a>
+									<span th:unless="${currentPage < totalPages}">Next</span>
+								</div>
+
+								<div class="col-sm-1">
+									<a th:if="${currentPage < totalPages}"
+										th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Last</a>
+									<span th:unless="${currentPage < totalPages}">Last</span>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -89,7 +124,7 @@
 	<script src="https://kit.fontawesome.com/a69fb56bf5.js"
 		crossorigin="anonymous"></script>
 	<script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
-	
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

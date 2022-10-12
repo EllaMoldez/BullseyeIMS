@@ -1,12 +1,13 @@
 package ca.bullseye.ims.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import ca.bullseye.ims.exceptions.ProductNotFoundException;
-import ca.bullseye.ims.model.Product;
 import ca.bullseye.ims.model.Supplier;
 import ca.bullseye.ims.repositories.SupplierRepository;
 
@@ -27,28 +28,27 @@ public class SupplierService {
 	}
 
 	// getting a specific supplier record
-	public Supplier getSupplierById(Long id) throws ProductNotFoundException {
-		if (supplierRepository.findById((Long) id).isPresent()) {
-			return supplierRepository.findById((Long) id).get();
-		} else if (supplierRepository.findById((Long) id).isEmpty()) {
-			throw new ProductNotFoundException("" + id);
+	public Supplier getSupplierById(Long supId) {
+		Optional<Supplier> optional = supplierRepository.findById(supId);
+		Supplier supplier = null;
+		if (optional.isPresent()) {
+			supplier = optional.get();
+		} else {
+			throw new RuntimeException("Record not found for Supplier Id: " + supId);
 		}
-		return null;
+		return supplier;
 	}
-
-	/*
-	 * // UPDATE public Supplier updateSupplier(Long supId, Supplier
-	 * supplierDetails) { Supplier supplier =
-	 * supplierRepository.findById(supId).get();
-	 * supplier.setSupName(supplierDetails.getSupName());
-	 * supplier.setSupAddress(supplierDetails.getSupAddress());
-	 * supplier.setSupEmail(supplierDetails.getSupEmail());
-	 * 
-	 * return supplierRepository.save(supplier); }
-	 */
 
 	// delete a specific supplier
 	public void deleteSupplier(Long supId) {
-		supplierRepository.deleteById(supId);
+		this.supplierRepository.deleteById(supId);
 	}
+
+	public Page<Supplier> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+		return this.supplierRepository.findAll(pageable);
+	}
+
+	
 }
