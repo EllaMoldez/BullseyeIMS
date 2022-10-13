@@ -42,7 +42,7 @@
 									<label class="control-label col-sm-1">Supplier ID</label>
 									<div class="col-sm-5">
 										<input type="text" class="form-control" th:field="*{supId}"
-											readonly="readonly">
+											readonly="readonly">										
 									</div>
 								</div>
 
@@ -50,6 +50,9 @@
 									<label class="control-label col-sm-1">Name</label>
 									<div class="col-sm-11">
 										<input type="text" class="form-control" th:field="*{supName}">
+										<p class="small error"
+											th:if="${#fields.hasErrors('supName')}"
+											th:errors="*{supName}"></p>
 									</div>
 								</div>
 
@@ -58,6 +61,9 @@
 									<div class="col-sm-11">
 										<input type="text" class="form-control"
 											th:field="*{supAddress}">
+											<p class="small error"
+											th:if="${#fields.hasErrors('supAddress')}"
+											th:errors="*{supAddress}"></p>
 									</div>
 								</div>
 
@@ -72,6 +78,9 @@
 									<div class="col-sm-5">
 										<input type="text" class="form-control"
 											th:field="*{supContact}">
+											<p class="small error"
+											th:if="${#fields.hasErrors('supContact')}"
+											th:errors="*{supContact}"></p>
 									</div>
 								</div>
 

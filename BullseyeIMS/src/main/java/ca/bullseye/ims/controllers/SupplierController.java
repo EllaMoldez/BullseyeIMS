@@ -23,7 +23,7 @@ public class SupplierController {
 	// display list of suppliers
 	@GetMapping(path = "/supplier")
 	public String viewSupplierList(Model model) {
-		return findPaginated(1, "supName", "asc", model);
+		return findPaginated(1, "supId", "asc", model);
 	}
 
 	// show new supplier page
@@ -37,7 +37,7 @@ public class SupplierController {
 
 	// save supplier to database
 	@RequestMapping(path = "/supplier/save", method = RequestMethod.POST)
-	public String saveSupplier(@Valid Supplier sup, BindingResult result, Supplier supplier) {
+	public String saveSupplier(@ModelAttribute @Valid Supplier supplier, BindingResult result) {
 		if(result.hasErrors()) {
 			return "supplier_new";
 		}
@@ -64,9 +64,10 @@ public class SupplierController {
 	}
 
 	// pagination and sorting
-	@GetMapping("/page/{pageNo}")
+	@GetMapping(path = "/page/{pageNo}")
 	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("sortField") String sortField,
 			@RequestParam("sortDirection") String sortDirection, Model model) {
+		
 		int pageSize = 6;
 
 		Page<Supplier> page = supplierService.findPaginated(pageNo, pageSize, sortField, sortDirection);

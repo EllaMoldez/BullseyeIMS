@@ -3,11 +3,15 @@ package ca.bullseye.ims.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import ca.bullseye.ims.exceptions.RecordNotFoundException;
 import ca.bullseye.ims.model.Employee;
-import ca.bullseye.ims.model.Product;
+
 import ca.bullseye.ims.repositories.EmployeeRepository;
 
 @Service
@@ -36,9 +40,17 @@ public class EmployeeService {
 		return null;
 	}
 
-	// deleting a specific record
+	// deleting a specific employee
 	public void deleteEmployee(Long empId) {
 		employeeRepository.deleteById(empId);
+	}
+
+	// pagination and sorting
+	public Page<Employee> findPaginated(int pageNo, int pageSize, String sortFieldEmp, String sortDirectionEmp) {
+		Sort sortEmp = sortDirectionEmp.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortFieldEmp).ascending()
+				: Sort.by(sortFieldEmp).descending();
+		Pageable pageableEmp = PageRequest.of(pageNo - 1, pageSize, sortEmp);
+		return this.employeeRepository.findAll(pageableEmp);
 	}
 
 }

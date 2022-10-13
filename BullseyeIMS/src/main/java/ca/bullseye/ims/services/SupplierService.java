@@ -43,7 +43,8 @@ public class SupplierService {
 	public void deleteSupplier(Long supId) {
 		this.supplierRepository.deleteById(supId);
 	}
-
+	
+	//pagination and sorting
 	public Page<Supplier> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
 		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);

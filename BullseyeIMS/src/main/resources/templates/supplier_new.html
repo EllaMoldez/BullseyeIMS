@@ -42,7 +42,7 @@
 									<label class="control-label col-sm-1">Name</label>
 									<div class="col-sm-11">
 										<input type="text" class="form-control"
-											placeholder="Supplier Name" th:field="*{supName}"> <br><p
+											placeholder="Supplier Name" th:field="*{supName}"><p class="small error"
 											th:if="${#fields.hasErrors('supName')}"
 											th:errors="*{supName}"></p>
 									</div>
@@ -53,22 +53,28 @@
 									<div class="col-sm-11">
 										<input type="text" class="form-control"
 											placeholder="Supplier Address" th:field="*{supAddress}">
-											<p
+											<p class="small error"
 											th:if="${#fields.hasErrors('supAddress')}"
-											th:errors="*{supAddress}">
+											th:errors="*{supAddress}"></p>
 									</div>
 								</div>
 
 								<div class="row align-items-center mt-3">
 									<label class="control-label col-sm-1">Email</label>
 									<div class="col-sm-5">
-										<input type="text" class="form-control" placeholder="Email"
+										<input type="email" class="form-control" placeholder="Email"
 											th:field="*{supEmail}">
+											<p class="small error"
+											th:if="${#fields.hasErrors('supEmail')}"
+											th:errors="*{supEmail}"></p>
 									</div>
 									<label class="control-label col-sm-1">Contact</label>
 									<div class="col-sm-5">
 										<input type="text" class="form-control"
 											placeholder="Contact Number" th:field="*{supContact}">
+											<p class="small error"
+											th:if="${#fields.hasErrors('supContact')}"
+											th:errors="*{supContact}"></p>
 									</div>
 								</div>
 

@@ -12,14 +12,13 @@ public class Supplier {
 	private Long supId;
 
 	@NotBlank(message = "Supplier name is required.")
-	@Size(min = 2, max = 250)
 	private String supName;
 
 	@NotBlank(message = "Supplier address is required.")
 	private String supAddress;
 
 	@NotBlank(message = "Supplier email is required.")
-	@Email
+	@Email(regexp = ".+@.+\\..+", message = "Email did not match format - test@example.com")
 	private String supEmail;
 
 	@NotBlank(message = "Supplier contact number is required.")

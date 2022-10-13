@@ -1,6 +1,8 @@
 package ca.bullseye.ims.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 
 @Entity
@@ -9,11 +11,28 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long empId;
+	
+	@NotBlank(message = "Employee first name is required.")
 	private String empFirstName;
+	
+	@NotBlank(message = "Employee last name is required.")
 	private String empLastName;
+	
+	@NotBlank(message = "Employee email is required.")
+	/*
+	 * @Email(regexp = ".+@.+\\..+", message =
+	 * "Email did not match format - test@example.com")
+	 */
+	@Email(regexp = "\"^(.+)@(.+)$\"", message = "Email did not match format - test@example.com")
 	private String empEmail;
+	
+	@NotBlank(message = "Employee contact number is required.")
 	private String empContact;
+	
+	@NotBlank(message = "Department is required.")
 	private String empDepartment;
+	
+	@NotBlank(message = "Job role is required.")
 	private String empJobRole;
 	
 	
