@@ -13,6 +13,10 @@
 	th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" href="../static/css/main.css"
 	th:href="@{/css/main.css}">
+
+<title>Bullseye Inventory Management System</title>
+</head>
+
 <body>
 	<!-- Navbar -->
 	<div th:insert="/fragments/navbar :: navbar"></div>
@@ -32,11 +36,9 @@
 					<div class="btn">
 						<button type="button" class="btn btn-sm btn-secondary">Export
 							List</button>
-						<a href="/product/add">
+						<a th:href="@{/product/create}">
 							<button type="button" class="btn btn-sm btn-primary">
-								<span data-feather="box" class="align-text-bottom"></span> New
-								Product
-							</button>
+								New Product</button>
 						</a>
 					</div>
 				</div>
@@ -57,23 +59,21 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="Product : ${productList}">
-									<td th:text="${Product.prodId}">Product ID</td>
-									<td th:text="${Product.prodSKU}">SKU</td>
-									<td th:text="${Product.prodName}">Name</td>
-									<td th:text="${Product.prodCategory}">Category</td>
-									<td th:text="${Product.prodBrand}">Brand</td>
-									<td th:text="${Product.prodPrice}">Price</td>
-									<td th:text="${Product.prodStatus}">Status</td>
+								<tr th:each="product : ${productList}">
+									<td th:text="${product.prodId}">Product ID</td>
+									<td th:text="${product.prodSKU}">SKU</td>
+									<td th:text="${product.prodName}">Name</td>
+									<td th:text="${product.prodCategory}">Category</td>
+									<td th:text="${product.prodBrand}">Brand</td>
+									<td th:text="${product.prodPrice}">Price</td>
+									<td th:text="${product.prodStatus}">Status</td>
 
-									<td><a th:href="@{'/product/edit/' + ${Product.prodId}}">
+									<td><a th:href="@{'/product/edit/' + ${product.prodId}}">
 											<button type="button" class="btn btn-sm btn-primary">
-												<span data-feather="edit"></span> Edit
-											</button>
-									</a> &nbsp; <a th:href="@{'/product/delete/' + ${Product.prodId}}">
+												Edit</button>
+									</a> &nbsp; <a th:href="@{'/product/delete/' + ${product.prodId}}">
 											<button type="button" class="btn btn-sm btn-danger">
-												<span data-feather="trash"></span> Delete
-											</button>
+												Delete</button>
 									</a></td>
 								</tr>
 							</tbody>
@@ -89,18 +89,21 @@
 		<p class="text-center">©2022 Bullseye IMS. Developed by Dartworks</p>
 	</footer>
 
-	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+	<!-- Javascripts -->
 	<script src="https://kit.fontawesome.com/a69fb56bf5.js"
 		crossorigin="anonymous"></script>
-	<script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+	<script type="text/javascript" ssrc="../static/js/main.js"
+		th:src="@{/js/main.js}"></script>
 
 	<script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
 	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
 		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
 		crossorigin="anonymous"></script>
+	<!-- end of Javascripts -->
+
 </body>
 </html>

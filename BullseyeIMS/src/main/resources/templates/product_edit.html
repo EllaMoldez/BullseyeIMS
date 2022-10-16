@@ -35,7 +35,7 @@
 				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-md-12">
-							<form th:action="@{/product/save}" th:object="${product}"
+							<form th:action="@{/product/update}" th:object="${product}"
 								method="POST">
 
 								<div class="row align-items-center mt-3">
@@ -50,10 +50,15 @@
 									<label class="control-label col-sm-1">SKU</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" th:field="*{prodSKU}">
+										<p class="small error" th:if="${#fields.hasErrors('prodSKU')}"
+											th:errors="*{prodSKU}"></p>
 									</div>
 									<label class="control-label col-sm-1">Name</label>
 									<div class="col-sm-6">
 										<input type="text" class="form-control" th:field="*{prodName}">
+										<p class="small error"
+											th:if="${#fields.hasErrors('prodName')}"
+											th:errors="*{prodName}"></p>
 									</div>
 								</div>
 
@@ -64,13 +69,18 @@
 											<option selected>Select Product Category</option>
 											<option th:each="prodCategory :${prodCategories}"
 												th:value="${prodCategory}" th:text="${prodCategory}">Categories
-											
-										</select>
+									</select>
+										<p class="small error"
+											th:if="${#fields.hasErrors('prodCategory')}"
+											th:errors="*{prodCategory}"></p>
 									</div>
 									<label class="control-label col-sm-1">Brand</label>
 									<div class="col-sm-6">
 										<input type="text" class="form-control"
 											th:field="*{prodBrand}">
+										<p class="small error"
+											th:if="${#fields.hasErrors('prodBrand')}"
+											th:errors="*{prodBrand}"></p>
 									</div>
 								</div>
 
@@ -86,11 +96,17 @@
 									<label class="control-label col-sm-1">Size</label>
 									<div class="col-sm-5">
 										<input type="text" class="form-control" th:field="*{prodSize}">
+										<p class="small error"
+											th:if="${#fields.hasErrors('prodSize')}"
+											th:errors="*{prodSize}"></p>
 									</div>
 									<label class="control-label col-sm-1">Color</label>
 									<div class="col-sm-5">
 										<input type="text" class="form-control"
 											th:field="*{prodColor}">
+										<p class="small error"
+											th:if="${#fields.hasErrors('prodColor')}"
+											th:errors="*{prodColor}"></p>
 									</div>
 								</div>
 
@@ -101,6 +117,9 @@
 											th:field="*{prodLocation}"> <small
 											class="form-text text-muted">Aisle Code (2 letters) +
 											Shelf Code (3 numbers) e.g. AA333</small>
+										<p class="small error"
+											th:if="${#fields.hasErrors('prodLocation')}"
+											th:errors="*{prodLocation}"></p>
 									</div>
 									<label class="control-label col-sm-1">Price</label>
 									<div class="col-sm-5">
@@ -108,31 +127,28 @@
 											th:field="*{prodPrice}"> <small
 											class="form-text text-muted">Enter value in amount
 											format</small>
+										<p class="small error"
+											th:if="${#fields.hasErrors('prodPrice')}"
+											th:errors="*{prodPrice}"></p>
 									</div>
 								</div>
 
-								<!-- <div class="row align-items-center mt-3">
-									<label class="control-label col-sm-1">Status</label>
-									<div class="col-sm-5">
-										<select class="form-control" name="prodStatus">
-											<option value="0">Select Product Status</option>
-											<option th:each="prodStatus :${prodStatus}"
-												th:text="${prodStatus.prodStatus}">Status
-										</select>
-									</div>
-								</div> -->
-								
 								<div class="row align-items-center mt-3">
 									<label class="control-label col-sm-1">Status</label>
 									<div class="col-sm-5">
-										<input type="radio" th:field="*{prodStatus}" value="Continued"/> Continued  &nbsp;&nbsp;
-										<input type="radio" th:field="*{prodStatus}" value="Discontinued"/> Discontinued
+										<input type="radio" th:field="*{prodStatus}" value="Continued" />
+										Continued &nbsp;&nbsp; <input type="radio"
+											th:field="*{prodStatus}" value="Discontinued" />
+										Discontinued
+										<p class="small error"
+											th:if="${#fields.hasErrors('prodStatus')}"
+											th:errors="*{prodStatus}"></p>
 									</div>
 								</div>
 
 								<div class="row justify-content-start mt-4">
 									<div class="col">
-										<a href="/product/save">
+										<a href="/product/add">
 											<button type="submit" class="btn btn-success">Save</button>
 										</a> <a href="/product">
 											<button type="button" class="btn btn-danger">Cancel</button>
@@ -151,18 +167,22 @@
 		<p class="text-center">©2022 Bullseye IMS. Developed by Dartworks</p>
 	</footer>
 
-	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+	<!-- Javascripts -->
 	<script src="https://kit.fontawesome.com/a69fb56bf5.js"
 		crossorigin="anonymous"></script>
-	<script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
-	
+	<script type="text/javascript" ssrc="../static/js/main.js"
+		th:src="@{/js/main.js}"></script>
+
 	<script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
 	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
 		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
 		crossorigin="anonymous"></script>
+	<!-- end of Javascripts -->
+
+
 </body>
 </html>

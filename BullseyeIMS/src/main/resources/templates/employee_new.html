@@ -17,6 +17,7 @@
 <title>Bullseye Inventory Management System</title>
 </head>
 
+
 <body>
 	<!-- navbar -->
 	<div th:insert="/fragments/navbar :: navbar"></div>
@@ -35,7 +36,7 @@
 				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-md-12">
-							<form class="form-group" th:action="@{/employee/save}"
+							<form class="form-group" th:action="@{/employee/add}"
 								th:object="${employee}" method="POST">
 
 								<div class="row align-items-center mt-3">
@@ -62,11 +63,17 @@
 									<div class="col-sm-4">
 										<input type="email" class="form-control pull-left"
 											placeholder="Email Address" th:field="*{empEmail}">
+											<p class="small error pull-left"
+											th:if="${#fields.hasErrors('empEmail')}"
+											th:errors="*{empEmail}"></p>
 									</div>
 									<label class="control-label col-sm-2">Contact Number</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control pull-left"
 											placeholder="Contact Number" th:field="*{empContact}">
+											<p class="small error pull-left"
+											th:if="${#fields.hasErrors('empContact')}"
+											th:errors="*{empContact}"></p>
 									</div>
 								</div>
 
@@ -78,6 +85,9 @@
 											<option th:each="empDepartment :${empDepartment}" th:value="${empDepartment}"
 												th:text="${empDepartment}">Department</option>
 										</select>
+										<p class="small error pull-left"
+											th:if="${#fields.hasErrors('empDepartment')}"
+											th:errors="*{empDepartment}"></p>
 									</div>
 									<label class="control-label col-sm-2">Job Role</label>
 									<div class="col-sm-4">
@@ -86,12 +96,34 @@
 											<option th:each="empJobRole :${empJobRole}"
 												th:text="${empJobRole}">Job Role
 										</select>
+										<p class="small error pull-left"
+											th:if="${#fields.hasErrors('empJobRole')}"
+											th:errors="*{empJobRole}"></p>
+									</div>
+								</div>
+								
+								<div class="row align-items-center mt-3">
+									<label class="control-label col-sm-2">Username</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control pull-left"
+											placeholder="Username" th:field="*{empUserName}">
+											<p class="small error pull-left"
+											th:if="${#fields.hasErrors('empUserName')}"
+											th:errors="*{empUserName}"></p>
+									</div>
+									<label class="control-label col-sm-2">Password</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control pull-left"
+											placeholder="Password" th:field="*{empPassword}">
+											<p class="small error pull-left"
+											th:if="${#fields.hasErrors('empPassword')}"
+											th:errors="*{empPassword}"></p>
 									</div>
 								</div>
 
 								<div class="row justify-content-start mt-4">
 									<div class="col">
-										<a href="/employee/save">
+										<a href="/employee/add">
 											<button type="submit" class="btn btn-success">Save</button>
 										</a> <a href="/employee">
 											<button type="button" class="btn btn-danger">Cancel</button>
@@ -111,18 +143,21 @@
 		<p class="text-center">©2022 Bullseye IMS. Developed by Dartworks</p>
 	</footer>
 
-	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+	<!-- Javascripts -->
 	<script src="https://kit.fontawesome.com/a69fb56bf5.js"
 		crossorigin="anonymous"></script>
-	<script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+	<script type="text/javascript" ssrc="../static/js/main.js"
+		th:src="@{/js/main.js}"></script>
 
 	<script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
 	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
 		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
 		crossorigin="anonymous"></script>
+	<!-- end of Javascripts -->
+	
 </body>
 </html>

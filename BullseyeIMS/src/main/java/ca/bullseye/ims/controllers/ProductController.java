@@ -20,7 +20,7 @@ import ca.bullseye.ims.services.ProductService;
 public class ProductController {
 
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 
 	private static List<String> prodCategories;
 	static {
@@ -33,12 +33,8 @@ public class ProductController {
 		prodCategories.add("Seasonal");
 	}
 
-	/*
-	 * private static List<String> prodStatus; static { prodStatus = new
-	 * ArrayList<>(); prodStatus.add("Continued"); prodStatus.add("Discontinued"); }
-	 */
-
-	@GetMapping(path = "/product")
+	// display list of products
+	@RequestMapping(value = "/product")
 	public String viewProductList(Model model) {
 		List<Product> productList = productService.getAllProducts();
 		model.addAttribute("productList", productList);
@@ -46,54 +42,50 @@ public class ProductController {
 		return "productlist";
 	}
 
-	@RequestMapping("/product/add")
+	// show new or create product page
+	@RequestMapping(value = "/product/create", method = RequestMethod.GET)
 	public String newProduct(Model model) {
+		/* create model attribute to bind form data */
 		Product product = new Product();
 		model.addAttribute(product);
-
 		model.addAttribute("prodCategories", prodCategories);
-		/* model.addAttribute("prodStatus", prodStatus); */
-
 		return "product_new";
 	}
 
-	@RequestMapping(value = "/product/save", method = RequestMethod.POST)
-	public String saveProduct(@Valid Product products, BindingResult result, @ModelAttribute("product") Product product) {
-		if(result.hasErrors()) {
+	// save new product to database
+	@RequestMapping(value = "/product/add", method = RequestMethod.POST)
+	public String addNewProduct(@ModelAttribute @Valid Product product, BindingResult result) {
+		if (result.hasErrors()) {
 			return "product_new";
 		}
-		productService.saveProduct(product);
+		productService.addNewProduct(product);
+		return "redirect:/product";
+	}
 	
+	// creating a get mapping that retrieves the detail of a specific product
+	@GetMapping(path = "/product/edit/{prodId}")
+	public String editProduct(@PathVariable(name = "prodId") Long prodId, Model model) {
+		//get product from the service
+		Product product = productService.getProductById(prodId);
+		
+		//set product as a model attribute to pre-populate the form
+		model.addAttribute("product", product);
+		model.addAttribute("prodCategories", prodCategories);
+		return "/product_edit";
+	}
+	
+	//save updated product record
+	@RequestMapping(value = "/product/update", method = RequestMethod.POST)
+	public String updateProduct(@ModelAttribute @Valid Product product, BindingResult result) {
+		if(result.hasErrors()) {
+			return "product_edit";
+		}
+		productService.updateProduct(product);
 		return "redirect:/product";
 	}
 
-	/*
-	 * // creating a get mapping that retrieves all the products from the database
-	 * 
-	 * @RequestMapping("/product") public List<Product> getAllProduct() { return
-	 * productService.getAllProducts(); }
-	 */
-
-	// creating a get mapping that retrieves the detail of a specific product
-	/*
-	 * @RequestMapping("edit/{sid}") private Product
-	 * getProductById(@PathVariable("id") Long id, Product product) { Product
-	 * prodToView = null; try { prodToView = productService.getProductById(id); }
-	 * catch (ProductNotFoundException e) { System.out.println(e);
-	 * e.printStackTrace(); }
-	 * 
-	 * return prodToView; }
-	 */
-	@RequestMapping(value = "/product/edit/{prodId}",  method = RequestMethod.GET)
-	public ModelAndView editProduct(@PathVariable(name = "prodId") Long prodId, @Valid Product products, BindingResult result) throws RecordNotFoundException {
-		ModelAndView mav = new ModelAndView("product_edit");
-		Product product = productService.getProductById(prodId);
-		mav.addObject("product", product);
-		return mav;
-	}
-
 	// creating a delete mapping that deletes a specific product
-	@RequestMapping(value = "/product/delete/{prodId}")
+	@RequestMapping(value = "/product/delete/{prodId}", method = { RequestMethod.DELETE, RequestMethod.GET })
 	private String deleteProduct(@PathVariable(name = "prodId") Long prodId) {
 		productService.deleteProduct(prodId);
 		return "redirect:/product";

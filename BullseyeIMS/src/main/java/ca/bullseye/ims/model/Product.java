@@ -1,53 +1,61 @@
 package ca.bullseye.ims.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long prodId;
 	
-	@NotEmpty(message = "Product SKU cannot be empty.")
+	@NotBlank(message = "Product SKU is required.")
 	@Size(min=2, max=10)
 	private String prodSKU;
 	
-	@NotEmpty(message = "Product name cannot be empty.")
+	@NotBlank(message = "Product name is required.")
 	private String prodName;
 	
-	@NotEmpty(message = "Product category cannot be empty.")
+	@NotBlank(message = "Product category is required.")
 	private String prodCategory;
 	
-	@NotEmpty(message = "Brand name cannot be empty.")
+	@NotEmpty(message = "Brand name is required.")
 	private String prodBrand;
 
 	private String prodDescription;
 	
-	@NotNull(message = "Product size cannot be empty.")
+	@NotNull(message = "Product size is required.")
 	private int prodSize;
 	
-	@NotEmpty(message = "Product color cannot be empty.")
+	@NotBlank(message = "Product color is required.")
 	private String prodColor;
 	
-	@NotEmpty(message = "Product location cannot be empty.")
+	@NotBlank(message = "Product location is required.")
 	private String prodLocation;
 	
 	@Digits(integer=8, fraction=2)
+	@NotNull(message = "Product price is required.")
 	private BigDecimal prodPrice;
 	
-	@NotEmpty(message = "Product status cannot be empty.")
+	@NotBlank(message = "Product status is required.")
 	private String prodStatus;
-
-	/*
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "supId") private Supplier supplier;
-	 */
+	
+	@OneToMany(mappedBy = "product")
+	private List<Order> orders;
 
 	public Long getProdId() {
 		return prodId;
@@ -137,10 +145,13 @@ public class Product {
 		this.prodStatus = prodStatus;
 	}
 
-	/*
-	 * public Supplier getSupplier() { return supplier; }
-	 * 
-	 * public void setSupplier(Supplier supplier) { this.supplier = supplier; }
-	 */
+	public List<Order> getOrders() {
+		return orders;
+	}
 
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
+	
 }
