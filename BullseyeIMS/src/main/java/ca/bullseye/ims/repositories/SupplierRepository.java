@@ -10,5 +10,4 @@ import ca.bullseye.ims.model.Supplier;
 @Repository
 public interface SupplierRepository extends JpaRepository<Supplier, Long>{
 	
-
 }

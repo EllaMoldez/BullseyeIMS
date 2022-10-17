@@ -4,13 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
+
 import org.springframework.stereotype.Service;
 
 import ca.bullseye.ims.model.Employee;
+
 import ca.bullseye.ims.repositories.EmployeeRepository;
 
 @Service
@@ -19,45 +18,64 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
-	// display all employee records
+	/* Display all employee records */
 	public List<Employee> getAllEmployees() {
 		return employeeRepository.findAll();
 	}
-
-	// create new employee record
-	public void addNewEmployee(Employee employee) {
-		employeeRepository.save(employee);
-	}
-
-	// getting a specific employee record
-	public Employee getEmployeeById(Long empId) {
-		Optional<Employee> optional = employeeRepository.findById(empId);
-		Employee employee = null;
-		
-		if(optional.isPresent()) {
-			employee = optional.get();
-		}else {
-			throw new RuntimeException("Record not found for Employee Id: " + empId);
-		}
-		return employee;
+	
+	/* Sort employee list */
+	public List<Employee> getAllEmployees(Sort sort) {
+		return employeeRepository.findAll();
 	}
 	
-	// update employee record
-	public void updateEmployee(Employee employee) {
-		employeeRepository.save(employee);
+	/* Pagination */
+	public Page<Employee> getAllEmployees(Pageable pageable) {
+		return employeeRepository.findAll(pageable);
 	}
 	
-	// deleting a specific employee
-	public void deleteEmployee(Long empId) {
+	/* Find employee record by Id */
+	public Optional<Employee> getEmployeeById(Long empId) {
+		return employeeRepository.findById(empId);
+	}
+	
+	public Page<Employee> getEmployeesBySearchValue(String value, Pageable pageable) {
+		Employee employee = new Employee();
+		employee.setEmpFirstName(value);
+		employee.setEmpLastName(value);
+		employee.setEmpDepartment(value);
+		employee.setEmpJobRole(value);
+		employee.setEmpEmail(value);
+		employee.setEmpContact(value);
+		employee.setEmpUserName(value);
+
+		ExampleMatcher.GenericPropertyMatcher propertyMatcher = ExampleMatcher.GenericPropertyMatchers.contains()
+				.ignoreCase();
+		ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny().withMatcher("empFirstName", propertyMatcher)
+				.withMatcher("empLastName", propertyMatcher).withMatcher("empDepartment", propertyMatcher)
+				.withMatcher("empJobRole", propertyMatcher).withMatcher("empEmail", propertyMatcher).withMatcher("empContact", propertyMatcher)
+				.withMatcher("empUserName", propertyMatcher);
+		Example<Employee> employeeExample = Example.of(employee, exampleMatcher);
+		return employeeRepository.findAll(employeeExample, pageable);
+	}
+
+	public Employee saveEmployee(Employee employee) {
+		return employeeRepository.save(employee);
+	}
+
+	public void deleteEmployee(Employee employee) {
+		employeeRepository.delete(employee);
+	}
+
+	public void deleteEmployeeById(Long empId) {
 		employeeRepository.deleteById(empId);
 	}
 
-	// pagination and sorting
-	public Page<Employee> findPaginated(int pageNo, int pageSize, String sortFieldEmp, String sortDirectionEmp) {
-		Sort sortEmp = sortDirectionEmp.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortFieldEmp).ascending()
-				: Sort.by(sortFieldEmp).descending();
-		Pageable pageableEmp = PageRequest.of(pageNo - 1, pageSize, sortEmp);
-		return this.employeeRepository.findAll(pageableEmp);
+	public boolean isEmployeeExists(Long empId) {
+		return employeeRepository.existsById(empId);
 	}
 
+	public long getTotalCount() {
+		return employeeRepository.count();
+	}
+	
 }

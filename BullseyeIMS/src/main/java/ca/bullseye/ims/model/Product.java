@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -54,9 +55,14 @@ public class Product {
 	@NotBlank(message = "Product status is required.")
 	private String prodStatus;
 	
-	@OneToMany(mappedBy = "product")
-	private List<Order> orders;
-
+	/*
+	 * @OneToMany(mappedBy = "product") private List<OrderItem> orderItems;
+	 */
+    
+	/*
+	 * @PreRemove public void preRemove() { this.orderItems.forEach(orderItem ->
+	 * orderItem.setProduct(null)); }
+	 */
 	public Long getProdId() {
 		return prodId;
 	}
@@ -145,13 +151,11 @@ public class Product {
 		this.prodStatus = prodStatus;
 	}
 
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
-
+	/*
+	 * public List<OrderItem> getOrderItems() { return orderItems; }
+	 * 
+	 * public void setOrderItems(List<OrderItem> orderItems) { this.orderItems =
+	 * orderItems; }
+	 */
 	
 }

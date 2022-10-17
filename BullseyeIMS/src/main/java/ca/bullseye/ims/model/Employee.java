@@ -50,8 +50,8 @@ public class Employee {
 	@Size(min=8, max=12, message = "Your password must between 8 and 15 characters")
 	private String empPassword;
 
-	@OneToMany(mappedBy = "employee")
-	private List<Order> orders;
+	@NotBlank(message = "Status is required.")
+	private String empStatus;
 
 	public Long getEmpId() {
 		return empId;
@@ -124,14 +124,19 @@ public class Employee {
 	public void setEmpPassword(String empPassword) {
 		this.empPassword = empPassword;
 	}
-
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
 	
+	public String getEmpStatus() {
+		return empStatus;
+	}
+
+	public void setEmpStatus(String empStatus) {
+		this.empStatus = empStatus;
+	}
+
+	/*
+	 * public List<Order> getOrders() { return orders; }
+	 * 
+	 * public void setOrders(List<Order> orders) { this.orders = orders; }
+	 */
 	
 }

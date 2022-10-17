@@ -6,13 +6,18 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.*;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import ca.bullseye.ims.exceptions.RecordNotFoundException;
+import org.springframework.data.domain.*;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.*;
+
+import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.server.ResponseStatusException;
+
 import ca.bullseye.ims.model.Product;
 import ca.bullseye.ims.services.ProductService;
 
@@ -33,61 +38,70 @@ public class ProductController {
 		prodCategories.add("Seasonal");
 	}
 
-	// display list of products
-	@RequestMapping(value = "/product")
-	public String viewProductList(Model model) {
-		List<Product> productList = productService.getAllProducts();
-		model.addAttribute("productList", productList);
+	@GetMapping("/product")
+	public String getProductsPage(@RequestParam(value = "search", required = false) String search,
+								  @RequestParam(defaultValue = "prodName") String sort, 
+								  @RequestParam(defaultValue = "1") int page,
+								  @RequestParam(defaultValue = "15") int size, 
+								  @RequestParam(defaultValue = "asc") String direction,
+								  Model model) {
 
-		return "productlist";
-	}
+		Sort.Order sortOrder = new Sort.Order(Sort.Direction.fromString(direction), sort).ignoreCase();
+		PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by(sortOrder));
 
-	// show new or create product page
-	@RequestMapping(value = "/product/create", method = RequestMethod.GET)
-	public String newProduct(Model model) {
-		/* create model attribute to bind form data */
-		Product product = new Product();
-		model.addAttribute(product);
-		model.addAttribute("prodCategories", prodCategories);
-		return "product_new";
-	}
-
-	// save new product to database
-	@RequestMapping(value = "/product/add", method = RequestMethod.POST)
-	public String addNewProduct(@ModelAttribute @Valid Product product, BindingResult result) {
-		if (result.hasErrors()) {
-			return "product_new";
+		Page<Product> productPage;
+		if (search != null && !search.isBlank()) {
+			productPage = productService.getProductsBySearchValue(search, pageRequest);
+		} else {
+			productPage = productService.getAllProducts(pageRequest);
 		}
-		productService.addNewProduct(product);
-		return "redirect:/product";
-	}
-	
-	// creating a get mapping that retrieves the detail of a specific product
-	@GetMapping(path = "/product/edit/{prodId}")
-	public String editProduct(@PathVariable(name = "prodId") Long prodId, Model model) {
-		//get product from the service
-		Product product = productService.getProductById(prodId);
-		
-		//set product as a model attribute to pre-populate the form
-		model.addAttribute("product", product);
+
+		model.addAttribute("currentPage", page);
+		model.addAttribute("pageSize", size);
+		model.addAttribute("totalPages", productPage.getTotalPages());
+		model.addAttribute("product", productPage.getContent());
 		model.addAttribute("prodCategories", prodCategories);
-		return "/product_edit";
+		return "product";
 	}
-	
-	//save updated product record
-	@RequestMapping(value = "/product/update", method = RequestMethod.POST)
-	public String updateProduct(@ModelAttribute @Valid Product product, BindingResult result) {
-		if(result.hasErrors()) {
-			return "product_edit";
+
+	@GetMapping("/addProduct")
+	public String getAddProductPage(Model model) {
+		model.addAttribute("pageTitle", "Create Product");
+		model.addAttribute("product", new Product());
+		model.addAttribute("prodCategories", prodCategories);
+		return "product-edit";
+	}
+
+	@GetMapping("/updateProduct")
+	public String getUpdateProductPage(@RequestParam Long prodId, Model model) {
+		Product existingProduct = productService.getProductById(prodId)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found."));
+		model.addAttribute("pageTitle", "Update Product");
+		model.addAttribute("product", existingProduct);
+		model.addAttribute("prodCategories", prodCategories);
+		return "product-edit";
+	}
+
+	@PostMapping("/saveProduct")
+	public String saveProduct(@Valid @ModelAttribute Product product, Errors errors, Model model) {
+		if (errors.hasErrors()) {
+			model.addAttribute("pageTitle", (product.getProdId() != null ? "Update" : "Create") + " Product");
+			model.addAttribute("prodCategories", prodCategories);
+			return "product-edit";
+		} else {
+			productService.saveProduct(product);
+			return "redirect:/product";
 		}
-		productService.updateProduct(product);
+	}
+
+	@GetMapping("/deleteProduct")
+	public String deleteProduct(@RequestParam Long prodId, Model model) {
+		if (!productService.isProductExists(prodId)) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found.");
+		}
+
+		this.productService.deleteProductById(prodId);
 		return "redirect:/product";
 	}
 
-	// creating a delete mapping that deletes a specific product
-	@RequestMapping(value = "/product/delete/{prodId}", method = { RequestMethod.DELETE, RequestMethod.GET })
-	private String deleteProduct(@PathVariable(name = "prodId") Long prodId) {
-		productService.deleteProduct(prodId);
-		return "redirect:/product";
-	}
 }

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{components/layout :: layout(~{::title}, ~{::#contents}, _)}">
+<head>
+<title th:text="${pageTitle} ?: _">Supplier</title>
+</head>
+<body>
+	<div id="contents">
+		<div
+			class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+			<h2 class="h2" th:text="${pageTitle} ?: _">Supplier</h2>
+		</div>
+		<div class="row mt-2 mb-5">
+			<form th:action="@{/saveSupplier}" th:object="${supplier}"
+				th:with="errors=${#fields.hasAnyErrors()}" method="POST"
+				class="needs-validation" novalidate="">
+				<input type="hidden" th:field="*{supId}">
+				<div class="row g-3">
+					<div class="col-sm-6">
+						<label for="supName" class="form-label">Name</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('supName')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="supName" th:field="*{supName}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Valid Name is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="supContactPerson" class="form-label">Contact Person</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('supContactPerson')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="supContactPerson" th:field="*{supContactPerson}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Contact person is required.</div>
+					</div>
+
+					<div class="col-sm-12">
+						<label for="supAddress" class="form-label">Address</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('supAddress')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="supAddress" th:field="*{supAddress}" placeholder="" required="">
+						<div class="invalid-feedback">Please enter a valid address.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="supCity" class="form-label">City</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('supCity')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="supCity" th:field="*{supCity}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Valid city is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="supStateOrProvince" class="form-label">State or Province</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('supStateOrProvince')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="supStateOrProvince" th:field="*{supStateOrProvince}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Valid state or province is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="supPostalCode" class="form-label">Postal Code</label>
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('supPostalCode')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="supPostalCode" th:field="*{supPostalCode}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Valid postal code is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="supCountry" class="form-label">Country</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('supCountry')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="supCountry" th:field="*{supCountry}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Valid country is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="supEmail" class="form-label">Email</label> 
+						<input type="email" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('supEmail')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="email" th:field="*{supEmail}" placeholder="you@example.com" required="">
+						<div class="invalid-feedback">Please enter a valid email address.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="supContact" class="form-label">Contact Number</label>
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('supContact')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="phoneNumber" th:field="*{supContact}" placeholder="+1(506) 999-9999">
+						<div class="invalid-feedback">Please enter your contact number.</div>
+					</div>
+
+					<div class="col-12">
+						<label for="supNotes" class="form-label">Notes <span
+							class="text-muted">(Optional)</span></label>
+
+						<textarea class="form-control" rows="2" placeholder="Notes"
+							th:field="*{supNotes}"></textarea>
+					</div>
+
+				</div>
+				<hr class="my-4">
+				<div class="row mb-2">
+					<p>
+						<button class="btn btn-secondary" type="submit">Save</button>
+						<a id="backButton" name="backButton"
+							onclick="window.history.go(-1)" class="btn btn-secondary px-4">Back</a>
+					</p>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

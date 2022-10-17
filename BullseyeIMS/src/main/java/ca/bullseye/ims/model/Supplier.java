@@ -11,7 +11,7 @@ import javax.validation.constraints.*;
  */
 
 @Entity
-@Table
+@Table(name = "supplier")
 public class Supplier {
 
 	@Id
@@ -48,9 +48,9 @@ public class Supplier {
 	
 	private String supNotes;
 	
-	@OneToMany(mappedBy = "supplier")
-	private List<Order> orders;
-
+	/*
+	 * @OneToMany(mappedBy = "supplier") private List<Order> orders;
+	 */
 	
 	public Long getSupId() {
 		return supId;
@@ -140,14 +140,11 @@ public class Supplier {
 		this.supNotes = supNotes;
 	}
 	
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
-
+	/*
+	 * public List<Order> getOrders() { return orders; }
+	 * 
+	 * public void setOrders(List<Order> orders) { this.orders = orders; }
+	 */
 	
 	
 }

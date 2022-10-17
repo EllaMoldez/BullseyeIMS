@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{components/layout :: layout(~{::title}, ~{::#contents}, _)}">
+<head>
+<title th:text="${pageTitle} ?: _">Employee</title>
+</head>
+<body>
+	<div id="contents">
+		<div
+			class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+			<h2 class="h2" th:text="${pageTitle} ?: _">Employee</h2>
+		</div>
+		<div class="row mt-2 mb-5">
+			<form th:action="@{/saveEmployee}" th:object="${employee}"
+				th:with="errors=${#fields.hasAnyErrors()}" method="post"
+				class="needs-validation" novalidate="">
+				<input type="hidden" th:field="*{empId}">
+
+				<div class="row g-3">
+					<!-- <div class="col-sm-6">
+						<label for="empId" class="form-label">Employee ID</label> 
+						<input type="text" class="form-control" th:field="*{empId}" readonly="readonly">
+					</div> 
+					
+					<div class="col-sm-6"></div> -->
+
+					<div class="col-sm-6">
+						<label for="empFirstName" class="form-label">First Name</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('empFirstName')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="empFirstName" th:field="*{empFirstName}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Employee First Name is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="empLastName" class="form-label">Last Name</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('empLastName')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="empLastName" th:field="*{empLastName}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Employee Last Name is required.</div>
+					</div>
+					
+					<div class="col-sm-6">
+						<label for="empEmail" class="form-label">Email</label> 
+						<input type="email" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('empEmail')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="empEmail" th:field="*{empEmail}" placeholder="you@bullseye.com" required="">
+						<div class="invalid-feedback">Please enter a valid email address.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="empContact" class="form-label">Contact Number</label>
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('empContact')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="empContact" th:field="*{empContact}" placeholder="+1(506) 999-9999">
+						<div class="invalid-feedback">Please enter your contact number.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="empDepartment" class="form-label">Department</label> 
+						<select class="form-control" name="empDepartment" th:classappend="${errors} and not ${#fields.hasErrors('empDepartment')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="empDepartment" th:field="*{empDepartment}">
+							<option th:value="${empDepartment}" selected>Select Department</option>
+							<option th:each="empDepartment :${empDepartment}" th:value="${empDepartment}" th:text="${empDepartment}">Department</option>
+						</select>
+						<div class="invalid-feedback">Employee department is required.</div>
+					</div>
+					
+					<div class="col-sm-6">
+						<label for="empJobRole" class="form-label">Job Role</label> 
+						<select class="form-control" name="empJobRole" th:classappend="${errors} and not ${#fields.hasErrors('empJobRole')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="empJobRole" th:field="*{empJobRole}">
+							<option th:value="${empJobRole}" selected>Select Job Role</option>
+							<option th:each="empJobRole :${empJobRole}" th:value="${empJobRole}" th:text="${empJobRole}">Job Role</option>
+						</select>
+						<div class="invalid-feedback">Employee job role is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="empUserName" class="form-label">Username</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('empUserName')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="empUserName" th:field="*{empUserName}"
+							placeholder="" value="" required="">
+						<div class="invalid-feedback">Username is required.</div>
+					</div>
+					
+					<div class="col-sm-6">
+						<label for="empPassword" class="form-label">Password</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('empPassword')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="empPassword" th:field="*{empPassword}"
+							placeholder="" value="" required="">
+						<div class="invalid-feedback">Password is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="empStatus" class="form-label">Employee Status &nbsp;&nbsp;</label> 
+						<input
+							type="radio" th:classappend="${errors} and not ${#fields.hasErrors('empStatus')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="empStatus" th:field="*{empStatus}" value="Active" /> Active &nbsp;&nbsp; 
+							<input type="radio"	th:field="*{empStatus}" value="Resigned" /> Resigned
+
+						<div class="invalid-feedback">Employee status is required.</div>
+					</div>
+				</div>
+
+				<hr class="my-4">
+				<div class="row mb-2">
+					<p>
+						<button class="btn btn-secondary" type="submit">Save </button>
+						<a id="backButton" name="backButton" href="/employee" onclick="window.history.go(-1)"
+							class="btn btn-secondary px-4">Back</a>
+					</p>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
