@@ -42,8 +42,12 @@ public class OrderService {
 		Order order = new Order();
 		order.setOrderId(value);
 	}
+<<<<<<< Updated upstream
 			*/
 
+=======
+	*/
+>>>>>>> Stashed changes
 	
 	
 }
