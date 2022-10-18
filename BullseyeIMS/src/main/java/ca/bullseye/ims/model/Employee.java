@@ -13,39 +13,43 @@ public class Employee {
 	private Long empId;
 
 	@NotBlank(message = "Employee first name is required.")
+	@Column(name="EMPFIRSTNAME")
 	private String empFirstName;
 
 	@NotBlank(message = "Employee last name is required.")
+	@Column(name="EMPLASTNAME")
 	private String empLastName;
 
 	@NotBlank(message = "Employee email is required.")
 	@Email(regexp = ".+@.+\\..+", message = "Email did not match format - test@example.com")
-	/*
-	 * @Email(regexp = "\"^(.+)@(.+)$\"", message =
-	 * "Email did not match format - test@example.com")
-	 */
+	@Column(name="EMPEMAIL")
 	private String empEmail;
 
 	@NotBlank(message = "Employee contact number is required.")
+	@Column(name="EMPCONTACT")
 	private String empContact;
 
 	@NotBlank(message = "Department is required.")
+	@Column(name="EMPDEPARTMENT")
 	private String empDepartment;
 
 	@NotBlank(message = "Job role is required.")
+	@Column(name="EMPJOBROLE")
 	private String empJobRole;
 
 	@NotBlank(message = "Username is required.")
-	@Size(min = 6, max = 10)
+	@Size(min = 6, max = 15)
+	@Column(name="EMPUSERNAME")
 	private String empUserName;
 
 	@NotBlank(message = "Password is required.")
 	@Size(min = 8, max = 12, message = "Your password must between 8 and 15 characters")
+	@Column(name="EMPPASSWORD")
 	private String empPassword;
 
 	@NotBlank(message = "Status is required.")
+	@Column(name="EMPSTATUS")
 	private String empStatus;
-
 
 	public Employee() {
 		super();

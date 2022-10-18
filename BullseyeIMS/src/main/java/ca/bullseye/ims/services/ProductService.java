@@ -41,11 +41,14 @@ public class ProductService {
 
 	public Page<Product> getProductsBySearchValue(String value, Pageable pageable) {
 		Product product = new Product();
+		product.setProdSKU(value);
 		product.setProdName(value);
+		product.setProdBrand(value);
 
 		ExampleMatcher.GenericPropertyMatcher propertyMatcher = ExampleMatcher.GenericPropertyMatchers.contains()
 				.ignoreCase();
-		ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny().withMatcher("prodName", propertyMatcher);
+		ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny().withMatcher("prodSKU", propertyMatcher)
+				.withMatcher("prodName", propertyMatcher).withMatcher("prodBrand", propertyMatcher);
 		Example<Product> productExample = Example.of(product, exampleMatcher);
 		return productRepository.findAll(productExample, pageable);
 	}
