@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{components/layout :: layout(_, ~{::#contents}, _)}">
+<body>
+<div id="contents">
+    <div th:fragment="export-btn-group(json)" class="btn-group">
+        <a th:if="${json}" th:href="${json}" download="oms_export.json" type="application/json"
+           class="btn btn-sm btn-outline-secondary">Create Report</a>
+    </div>
+</div>
+</body>
+</html>

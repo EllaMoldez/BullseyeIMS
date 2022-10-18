@@ -199,6 +199,9 @@ pre {
 	-ms-overflow-style: scrollbar;
 }
 
+.error{
+	color: red;
+}
 
 figure {
 	margin: 0 0 1rem;
@@ -233,7 +236,7 @@ th {
 
 label {
 	display: inline-block;
-	margin-bottom: 0.5rem;
+	margin-bottom: 0.7rem;
 }
 
 button {
@@ -8329,6 +8332,7 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover
 
 .mt-3, .my-3 {
 	margin-top: 1rem !important;
+	margin-bottom: 0.5rem;
 }
 
 .mr-3, .mx-3 {

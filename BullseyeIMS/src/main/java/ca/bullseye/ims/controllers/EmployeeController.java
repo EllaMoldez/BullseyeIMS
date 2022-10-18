@@ -6,27 +6,27 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.validation.*;
 
-import ca.bullseye.ims.exceptions.RecordNotFoundException;
+import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.server.ResponseStatusException;
+
 import ca.bullseye.ims.model.Employee;
 
 import ca.bullseye.ims.services.EmployeeService;
 
 @Controller
 public class EmployeeController {
-	
+
 	@Autowired
-	EmployeeService employeeService;
-	
+	private EmployeeService employeeService;
+
 	private static List<String> empDepartment;
 	static {
 		empDepartment = new ArrayList<>();
@@ -36,7 +36,7 @@ public class EmployeeController {
 		empDepartment.add("Store");
 		empDepartment.add("Transportation");
 	}
-	
+
 	private static List<String> empJobRole;
 	static {
 		empJobRole = new ArrayList<>();
@@ -45,47 +45,164 @@ public class EmployeeController {
 		empJobRole.add("Staff");
 		empJobRole.add("Delivery Driver");
 	}
-	
-	@GetMapping(path = "/employee")
-	public String viewEmployeeList(Model model) {
-		List<Employee> employeeList = employeeService.getAllEmployees();
-		model.addAttribute("employeeList", employeeList);
 
-		return "employeelist";
-	}
-	
-	@RequestMapping(path = "/employee/add")
-	public String newEmployee(Model model) {
-		Employee employee = new Employee();
-		model.addAttribute(employee);
-		
+	@GetMapping("/employee")
+	public String getEmployeePage(@RequestParam(value = "empId", required = false) Long empId,
+								  @RequestParam(value = "search", required = false) String search,
+								  @RequestParam(defaultValue = "empFirstName") String sort, @RequestParam(defaultValue = "1") int page,
+			                      @RequestParam(defaultValue = "15") int size, 
+			                      @RequestParam(defaultValue = "asc") String direction,
+			                      Model model) {
+		if (empId != null) {
+			Employee employee = employeeService.getEmployeeById(empId)
+					.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
+			model.addAttribute("employee", employee);
+			return "employee-info";
+		}
+
+		Sort.Order sortOrder = new Sort.Order(Sort.Direction.fromString(direction), sort).ignoreCase();
+		PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by(sortOrder));
+
+		Page<Employee> employeePage;
+		if (search != null && !search.isBlank()) {
+			employeePage = employeeService.getEmployeesBySearchValue(search, pageRequest);
+		} else {
+			employeePage = employeeService.getAllEmployees(pageRequest);
+		}
+		model.addAttribute("currentPage", page);
+		model.addAttribute("pageSize", size);
+		model.addAttribute("totalPages", employeePage.getTotalPages());
+		model.addAttribute("employee", employeePage.getContent());
 		model.addAttribute("empDepartment", empDepartment);
 		model.addAttribute("empJobRole", empJobRole);
-
-		return "employee_new";
+		return "employee";
 	}
-	
-	@RequestMapping(path = "/employee/save", method = RequestMethod.POST)
-	public String saveEmployee(@ModelAttribute("employee") Employee employee) {
-		
-		employeeService.saveEmployee(employee);
 
-		
+	@GetMapping("/addEmployee")
+	public String getAddEmployeePage(Model model) {
+		model.addAttribute("pageTitle", "Create Employee");
+		model.addAttribute("employee", new Employee());
+		model.addAttribute("empDepartment", empDepartment);
+		model.addAttribute("empJobRole", empJobRole);
+		return "employee-edit";
+	}
+
+	@GetMapping("/updateEmployee")
+	public String getUpdateEmployeePage(@RequestParam Long empId, Model model) {
+		Employee existingEmployee = employeeService.getEmployeeById(empId)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found."));
+		model.addAttribute("pageTitle", "Edit Employee");
+		model.addAttribute("employee", existingEmployee);
+		model.addAttribute("empDepartment", empDepartment);
+		model.addAttribute("empJobRole", empJobRole);
+		return "employee-edit";
+	}
+
+	@PostMapping("/saveEmployee")
+	public String saveEmployee(@Valid @ModelAttribute Employee employee, Errors errors, Model model) {
+		if (errors.hasErrors()) {
+			model.addAttribute("pageTitle", (employee.getEmpId() != null ? "Update" : "Create") + " Employee");
+			model.addAttribute("empDepartment", empDepartment);
+			model.addAttribute("empJobRole", empJobRole);
+			return "employee-edit";
+		} else {
+			employeeService.saveEmployee(employee);
+			return "redirect:/employee";
+		}
+	}
+
+	@GetMapping("/deleteEmployee")
+	public String deleteEmployee(@RequestParam Long empId, Model model) {
+		if (!employeeService.isEmployeeExists(empId)) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found.");
+		}
+
+		employeeService.deleteEmployeeById(empId);
 		return "redirect:/employee";
 	}
-	
-	@RequestMapping(path = "/employee/edit/{empId}",  method = RequestMethod.GET)
-	public ModelAndView editEmployee(@PathVariable(name = "empId") Long empId, @Valid Employee employees, BindingResult result) throws RecordNotFoundException {
-		ModelAndView mav = new ModelAndView("employee_edit");
-		Employee employee = employeeService.getEmployeeById(empId);
-		mav.addObject("employee", employee);
-		return mav;
-	}
-	
-	@RequestMapping(value = "/employee/delete/{empId}")
-	private String deleteEmployee(@PathVariable(name = "empId") Long empId) {
-		employeeService.deleteEmployee(empId);
-		return "redirect:/employee";
-	}
-	
+
+	/*
+	 * // display list of employee
+	 * 
+	 * @RequestMapping(value = "/employee") public String viewEmployeeList(Model
+	 * model) { List<Employee> employeeList = employeeService.getAllEmployees();
+	 * model.addAttribute("employeeList", employeeList);
+	 * 
+	 * return "employeelist"; }
+	 * 
+	 * // show new or create employee page
+	 * 
+	 * @RequestMapping(value = "/employee/create", method = RequestMethod.GET)
+	 * public String newEmployee(Model model) {
+	 * 
+	 * // create model attribute to bind form data Employee employee = new
+	 * Employee(); model.addAttribute(employee);
+	 * 
+	 * model.addAttribute("empDepartment", empDepartment);
+	 * model.addAttribute("empJobRole", empJobRole);
+	 * 
+	 * return "employee_new"; }
+	 * 
+	 * // save employee to database with error validation
+	 * 
+	 * @RequestMapping(value = "/employee/add", method = RequestMethod.POST) public
+	 * String addNewEmployee(@ModelAttribute @Valid Employee employee, BindingResult
+	 * result) { if (result.hasErrors()) { return "employee_new"; }
+	 * employeeService.addNewEmployee(employee); return "redirect:/employee"; }
+	 * 
+	 * // creating a get mapping that retrieves the detail of a specific employee
+	 * 
+	 * @GetMapping(path = "/employee/edit/{empId}") public String
+	 * editEmployee(@PathVariable(name = "empId") Long empId, Model model) { // get
+	 * employee from the service Employee employee =
+	 * employeeService.getEmployeeById(empId);
+	 * 
+	 * // set employee as a model attribute to pre-populate the form
+	 * model.addAttribute("employee", employee); model.addAttribute("empDepartment",
+	 * empDepartment); model.addAttribute("empJobRole", empJobRole); return
+	 * "/employee_edit"; }
+	 * 
+	 * // save updated employee record
+	 * 
+	 * @RequestMapping(value="/employee/update", method = RequestMethod.POST) public
+	 * String updateEmployee(@ModelAttribute @Valid Employee employee, BindingResult
+	 * result) { if (result.hasErrors()) { return "employee_edit"; }
+	 * employeeService.updateEmployee(employee); return "redirect:/employee"; }
+	 * 
+	 * // creating a delete mapping that deletes a specific employee
+	 * 
+	 * @RequestMapping(value = "/employee/delete/{empId}", method = {
+	 * RequestMethod.DELETE, RequestMethod.GET }) private String
+	 * deleteEmployee(@PathVariable(name = "empId") Long empId) { // call delete
+	 * employee method employeeService.deleteEmployee(empId); return
+	 * "redirect:/employee"; }
+	 * 
+	 * 
+	 * // pagination and sorting
+	 * 
+	 * @GetMapping(path = "/page/{pageNo}") public String
+	 * findPaginated(@PathVariable(value = "pageNo") int
+	 * pageNo, @RequestParam("sortFieldEmp") String sortFieldEmp,
+	 * 
+	 * @RequestParam("sortDirectionEmp") String sortDirectionEmp, Model model) { int
+	 * pageSize = 6;
+	 * 
+	 * Page<Employee> pageEmp = employeeService.findPaginated(pageNo, pageSize,
+	 * sortFieldEmp, sortDirectionEmp); List<Employee> employeeList =
+	 * pageEmp.getContent();
+	 * 
+	 * model.addAttribute("currentPage", pageNo); model.addAttribute("totalPages",
+	 * pageEmp.getTotalPages()); model.addAttribute("totalItems",
+	 * pageEmp.getTotalElements());
+	 * 
+	 * model.addAttribute("sortFieldEmp", sortFieldEmp);
+	 * model.addAttribute("sortDirection", sortDirectionEmp);
+	 * model.addAttribute("reverseSortDirection", sortDirectionEmp.equals("asc") ?
+	 * "desc" : "asc");
+	 * 
+	 * model.addAttribute("employeeList", employeeList);
+	 * 
+	 * return "employeelist"; }
+	 */
+
 }

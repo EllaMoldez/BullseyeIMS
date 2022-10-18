@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{components/layout :: layout(~{::title}, ~{::#contents}, _)}">
+<head>
+<title th:text="${pageTitle} ?: _">Product</title>
+</head>
+<body>
+	<div id="contents">
+		<div
+			class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+			<h2 class="h2" th:text="${pageTitle} ?: _">Product</h2>
+		</div>
+		<div class="row mt-2 mb-5">
+			<form th:action="@{/saveProduct}" th:object="${product}"
+				th:with="errors=${#fields.hasAnyErrors()}" method="post"
+				class="needs-validation" novalidate="">
+				<input type="hidden" th:field="*{prodId}">
+
+				<div class="row g-3">
+					<!-- <div class="col-sm-6">
+						<label for="prodId" class="form-label">Product ID</label> <input
+							type="text" class="form-control" th:field="*{prodId}"
+							readonly="readonly">
+					</div> -->
+
+					<div class="col-sm-6">
+						<label for="prodSKU" class="form-label">Product SKU</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('prodSKU')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="prodSKU" th:field="*{prodSKU}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Product SKU is required.</div>
+					</div>
+
+					<div class="col-12">
+						<label for="prodName" class="form-label">Name</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('prodName')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="prodName" th:field="*{prodName}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Product name is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="prodCategory" class="form-label">Category</label> 
+						<select	class="form-control" name="prodCategory" th:classappend="${errors} and not ${#fields.hasErrors('prodCategory')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="prodCategory" th:field="*{prodCategory}">
+							<option th:value="${prodCategory}" selected>Select Product Category</option>
+							<option th:each="prodCategory :${prodCategories}" th:value="${prodCategory}" th:text="${prodCategory}">Categories</option>
+						</select>
+						<div class="invalid-feedback">Product category is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="prodBrand" class="form-label">Brand Name</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('prodBrand')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="prodBrand" th:field="*{prodBrand}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Brand name is required.</div>
+					</div>
+
+
+					<div class="col-sm-12">
+						<label for="prodDescription" class="form-label">Description
+							<span class="text-muted">(Optional)</span></label>
+						<textarea class="form-control" rows="2" th:field="*{prodDescription}"></textarea>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="prodSize" class="form-label">Size</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('prodSize')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="prodSize" th:field="*{prodSize}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Product size is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="prodColor" class="form-label">Color</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('prodColor')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="prodColor" th:field="*{prodColor}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Product color is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="prodLocation" class="form-label">Location 
+						<span class="text-muted">(Aisle Code and Shelf Number)</span></label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('prodLocation')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="prodLocation" th:field="*{prodLocation}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Location/Shelf no. is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="prodPrice" class="form-label">Price</label> 
+						<input type="text" class="form-control" th:classappend="${errors} and not ${#fields.hasErrors('prodPrice')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="prodPrice" th:field="*{prodPrice}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Product price is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="prodStatus" class="form-label">Status &nbsp;&nbsp;</label> 
+						<input type="radio" th:classappend="${errors} and not ${#fields.hasErrors('prodStatus')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="prodStatus" th:field="*{prodStatus}" value="Continued" /> Continued &nbsp;&nbsp; 
+						<input type="radio"	th:field="*{prodStatus}" value="Discontinued" /> Discontinued 
+
+						<div class="invalid-feedback">Product status is required.</div>
+					</div>
+				</div>
+
+				<hr class="my-4">
+				<div class="row mb-2">
+					<p>
+						<button class="btn btn-secondary" type="submit">Save </button>
+						<a id="backButton" name="backButton" href="/product" onclick="window.history.go(-1)"
+							class="btn btn-secondary px-4">Back</a>
+					</p>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

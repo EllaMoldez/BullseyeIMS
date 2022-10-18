@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{components/layout :: layout(~{::title}, ~{::#contents}, _)}">
+<head>
+<title>Bullseye IMS - Employees</title>
+</head>
+<body>
+	<div id="contents">
+		<div
+			class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+			<h2 class="h2">Employees</h2>
+			<div class="btn-toolbar gap-1">
+				<div id="sort-menu"
+					th:replace="~{components/sort-menu :: sort-menu('empFirstName-First Name, empLastName-Last Name, empDepartment-Department, empJobRole-Job Role, empEmail-Email')}"></div>
+				<a th:href="@{/addEmployee}" class="btn btn-sm btn-outline-secondary"> 
+				<i class="bi bi-plus-circle"></i>&nbsp;Add Employee </a>
+				<div th:replace="~{components/export-btn-group :: export-btn-group(@{/api/customers?format=json})}"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div th:replace="~{components/search-bar :: search-bar(@{/employee}, _)}"></div>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped table-sm">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">First Name</th>
+						<th scope="col">Last Name</th>
+						<th scope="col">Department</th>
+						<th scope="col">Job Role</th>
+						<th scope="col">Email</th>
+						<th scope="col">Contact Number</th>
+						<th scope="col">Status</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${#lists.isEmpty(employee)}">
+						<td colspan="9">No employee record.</td>
+					</tr>
+					<tr th:each="employee, status : ${employee}">
+						<td th:text="${status.count + ((currentPage - 1) * pageSize)}">1</td>
+						<td th:text="${employee.empFirstName}">First Name</td>
+						<td th:text="${employee.empLastName}">Last Name</td>
+						<td th:text="${employee.empDepartment}">Department</td>
+						<td th:text="${employee.empJobRole}">Job Role</td>
+						<td th:text="${employee.empEmail}">Email</td>
+						<td th:text="${employee.empContact}">Contact</td>
+						<td th:text="${employee.empStatus}">Status</td>
+						
+						<td><a th:href="@{/employee(id=${employee.empId})}"
+							class="link-secondary"> <i class="bi bi-info-circle-fill"></i></a>&nbsp;
+							<!-- <a th:href="@{/createOrder(customerId=${employee.empId})}"
+							class="link-secondary"> <i class="bi bi-cart-fill"></i></a>&nbsp; -->
+							<a th:href="@{/updateEmployee(empId=${employee.empId})}"
+							class="link-secondary"> <i class="bi bi-pencil-fill"></i></a>&nbsp;
+							<a data-link-type="confirmDelete"
+							th:href="@{/deleteEmployee(empId=${employee.empId})}"
+							class="link-secondary"><i class="bi bi-trash-fill"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="text-center text-secondary mb-3">
+			<div th:replace="~{components/pagination :: pagination}"></div>
+		</div>
+	</div>
+</body>
+</html>

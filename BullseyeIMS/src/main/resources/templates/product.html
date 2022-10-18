@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{components/layout :: layout(~{::title}, ~{::#contents}, _)}">
+<head>
+<title>Bullseye IMS - Products</title>
+</head>
+<body>
+	<div id="contents">
+		<div
+			class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+			<h2 class="h2">Products</h2>
+			<div class="btn-toolbar gap-1">
+				<div id="sort-menu"
+					th:replace="~{components/sort-menu :: sort-menu('prodSKU-SKU, prodName-Name, prodCategory-Category, prodPrice-Price')}"></div>
+				<a th:href="@{/addProduct}"
+					class="btn btn-sm btn-outline-secondary mx-1"> <i
+					class="bi bi-plus-circle"></i>&nbsp;Add Product
+				</a>
+				<div
+					th:replace="~{components/export-btn-group :: export-btn-group(@{/api/products?format=json})}"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<form th:action="@{/products}" method="get">
+					<div class="input-group mb-3">
+						<input type="text" name="search" class="form-control"
+							placeholder="Search" th:value="${param.search} ?: _">
+						<button type="submit" class="btn btn-outline-secondary">Search</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="table-responsive">
+
+			<table class="table table-striped table-sm">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">SKU</th>
+						<th scope="col">Name</th>
+						<th scope="col">Category</th>
+						<th scope="col">Brand</th>
+						<th scope="col">Price</th>
+						<th scope="col">Status</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${#lists.isEmpty(product)}">
+						<td colspan="8">No products available.</td>
+					</tr>
+					<tr th:each="product, status : ${product}">
+						<td th:text="${status.count + ((currentPage - 1) * pageSize)}">1</td>
+						<td th:text="${product.prodSKU}">SKU</td>
+						<td th:text="${product.prodName}">Name</td>
+						<td th:text="${product.prodCategory}">Category</td>
+						<td th:text="${product.prodBrand}">Brand</td>
+						<td th:text="${#numbers.formatDecimal(product.prodPrice, 1, 'DEFAULT', 2, 'DEFAULT')}">Price</td>
+						<td th:text="${product.prodStatus}">Status</td>
+						
+						<td><a th:href="@{/updateProduct(prodId=${product.prodId})}"
+							class="link-secondary"> <i class="bi bi-pencil-fill"></i></a>&nbsp;
+							<a data-link-type="confirmDelete"
+							th:href="@{/deleteProduct(prodId=${product.prodId})}"
+							class="link-secondary"><i class="bi bi-trash-fill"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="text-center text-secondary mb-3">
+			<div th:replace="~{components/pagination :: pagination}"></div>
+		</div>
+	</div>
+</body>
+</html>
