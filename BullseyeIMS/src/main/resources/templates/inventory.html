@@ -8,21 +8,16 @@
 	<div id="contents">
 		<div
 			class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-			<h2 class="h2">Products</h2>
+			<h2 class="h2">Inventory</h2>
 			<div class="btn-toolbar gap-1">
-				<div id="sort-menu"
-					th:replace="~{fragments/sort-menu :: sort-menu('prodSKU-SKU, prodName-Name, prodCategory-Category, prodPrice-Price')}"></div>
-				<a th:href="@{/addProduct}"
-					class="btn btn-sm btn-outline-secondary mx-1"> <i
-					class="bi bi-plus-circle"></i>&nbsp;Add Product
-				</a>
-				<div
-					th:replace="~{fragments/export-btn-group :: export-btn-group(@{/api/products?format=json})}"></div>
+				<div id="sort-menu" th:replace="~{fragments/sort-menu :: sort-menu('prodSKU-SKU, prodName-Name, prodCategory-Category, prodPrice-Price')}"></div>
+				<div th:replace="~{fragments/export-btn-group :: export-btn-group(@{/api/products?format=json})}"></div>
 			</div>
 		</div>
+		
 		<div class="row">
 			<div class="col-md-4">
-				<form th:action="@{/product}" method="get">
+				<form th:action="@{/inventory}" method="get">
 					<div class="input-group mb-3">
 						<input type="text" name="search" class="form-control"
 							placeholder="Search" th:value="${param.search} ?: _">
@@ -37,11 +32,11 @@
 				<thead>
 					<tr>
 						<th scope="col">#</th>
-						<th scope="col">SKU</th>
+						<th scope="col">Product SKU</th>
 						<th scope="col">Name</th>
 						<th scope="col">Category</th>
 						<th scope="col">Brand</th>
-						<th scope="col">Price</th>
+						<th scope="col">Total Price</th>
 						<th scope="col">Status</th>
 						<th scope="col">Actions</th>
 					</tr>
@@ -61,9 +56,6 @@
 						
 						<td><a th:href="@{/updateProduct(prodId=${product.prodId})}"
 							class="link-secondary"> <i class="bi bi-pencil-fill"></i></a>&nbsp;
-							<a data-link-type="confirmDelete"
-							th:href="@{/deleteProduct(prodId=${product.prodId})}"
-							class="link-secondary"><i class="bi bi-trash-fill"></i></a></td>
 					</tr>
 				</tbody>
 			</table>

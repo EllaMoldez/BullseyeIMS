@@ -2,15 +2,8 @@ package ca.bullseye.ims.model;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "employee")
@@ -41,17 +34,32 @@ public class Employee {
 
 	@NotBlank(message = "Job role is required.")
 	private String empJobRole;
-	
+
 	@NotBlank(message = "Username is required.")
-	@Size(min=6, max=10)
+	@Size(min = 6, max = 10)
 	private String empUserName;
-	
+
 	@NotBlank(message = "Password is required.")
-	@Size(min=8, max=12, message = "Your password must between 8 and 15 characters")
+	@Size(min = 8, max = 12, message = "Your password must between 8 and 15 characters")
 	private String empPassword;
 
 	@NotBlank(message = "Status is required.")
 	private String empStatus;
+
+
+	public Employee() {
+		super();
+	}
+
+	public Employee(@NotBlank(message = "Username is required.") 
+					@Size(min = 6, max = 10) String empUserName,
+					@NotBlank(message = "Password is required.") 
+					@Size(min = 8, max = 12, message = "Your password must between 8 and 15 characters") 
+					String empPassword) {
+		super();
+		this.empUserName = empUserName;
+		this.empPassword = empPassword;
+	}
 
 	public Long getEmpId() {
 		return empId;
@@ -124,7 +132,7 @@ public class Employee {
 	public void setEmpPassword(String empPassword) {
 		this.empPassword = empPassword;
 	}
-	
+
 	public String getEmpStatus() {
 		return empStatus;
 	}
@@ -132,11 +140,5 @@ public class Employee {
 	public void setEmpStatus(String empStatus) {
 		this.empStatus = empStatus;
 	}
-
-	/*
-	 * public List<Order> getOrders() { return orders; }
-	 * 
-	 * public void setOrders(List<Order> orders) { this.orders = orders; }
-	 */
 	
 }

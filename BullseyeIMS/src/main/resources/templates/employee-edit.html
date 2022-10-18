@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{components/layout :: layout(~{::title}, ~{::#contents}, _)}">
+	th:replace="~{fragments/layout :: layout(~{::title}, ~{::#contents}, _)}">
 <head>
 <title th:text="${pageTitle} ?: _">Employee</title>
 </head>

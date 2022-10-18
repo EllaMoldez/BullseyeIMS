@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bullseye IMS - Login</title>
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link th:href="@{/css/login.css}" rel="stylesheet">
 </head>
 <body>
@@ -23,9 +23,9 @@
 				<h2 class="form-heading">Welcome</h2>
 				<p>Please login with your employee account</p>
 				<div class="form-group">
-					<span th:text="${message}"></span> <input name="username"
+					<span th:text="${message}"></span> <input name="empUserName"
 						type="text" class="form-control" placeholder="Username"
-						autofocus="true" required /> <input name="password"
+						autofocus="true" required /> <input name="empPassword"
 						type="password" class="form-control" placeholder="Password"
 						required /> <span class="has-error" th:text="${error}"></span> <input
 						type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

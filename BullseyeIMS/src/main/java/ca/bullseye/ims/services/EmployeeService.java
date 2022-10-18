@@ -17,7 +17,7 @@ public class EmployeeService {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
-
+    
 	/* Display all employee records */
 	public List<Employee> getAllEmployees() {
 		return employeeRepository.findAll();
@@ -76,6 +76,20 @@ public class EmployeeService {
 
 	public long getTotalCount() {
 		return employeeRepository.count();
+	}
+	
+	public boolean doesEmployeeExist(String empUserName) {
+		return employeeRepository.existsByEmpUserName(empUserName);
+	}
+	
+	public Employee findEmployee(String empUserName) {
+		Optional<Employee> optional = Optional.of(employeeRepository.findByEmpUserName(empUserName));
+		Employee employee = null;
+		
+		if(optional.isPresent()) {
+			employee = optional.get();		
+		}		
+		return employeeRepository.findByEmpUserName(empUserName);
 	}
 	
 }

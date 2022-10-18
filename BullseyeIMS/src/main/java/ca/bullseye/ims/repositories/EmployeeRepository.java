@@ -7,5 +7,7 @@ import ca.bullseye.ims.model.Employee;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+	Employee findByEmpUserName(String empUserName);
 
+	boolean existsByEmpUserName(String mTitle);
 }
