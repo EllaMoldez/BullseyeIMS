@@ -1,11 +1,15 @@
 package ca.bullseye.ims.services;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
-
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import ca.bullseye.ims.model.Supplier;
@@ -16,7 +20,7 @@ public class SupplierService {
 
 	@Autowired
 	private SupplierRepository supplierRepository;
-
+	
 	/* Display all supplier records */
 	public List<Supplier> getAllSuppliers() {
 		return supplierRepository.findAll();
@@ -32,13 +36,13 @@ public class SupplierService {
 		return supplierRepository.findAll(pageable);
 	}
 
-	/*
-	 * public Page<Supplier> getAllSuppliersOrderByOrdersSizeAsc(Pageable pageable)
-	 * { return supplierRepository.getAllSuppliersOrderByOrdersSizeAsc(pageable); }
-	 * 
-	 * public Page<Supplier> getAllSuppliersOrderByOrdersSizeDesc(Pageable pageable)
-	 * { return supplierRepository.getAllSuppliersOrderByOrdersSizeDesc(pageable); }
-	 */
+	public Page<Supplier> getAllSuppliersOrderByOrdersSizeAsc(Pageable pageable) {
+		return ((SupplierService) supplierRepository).getAllSuppliersOrderByOrdersSizeAsc(pageable);
+	}
+
+	public Page<Supplier> getAllSuppliersOrderByOrdersSizeDesc(Pageable pageable) {
+		return ((SupplierService) supplierRepository).getAllSuppliersOrderByOrdersSizeDesc(pageable);
+	}
 
 	/* find supplier record by Id */
 	public Optional<Supplier> getSupplierById(Long supId) {
@@ -82,10 +86,9 @@ public class SupplierService {
 		return supplierRepository.count();
 	}
 
-	/*
-	 * public List<Map<String, Long>> getSupplierWithMaxOrders(Pageable pageable) {
-	 * return this.supplierRepository.getSupplierWithMaxOrders(pageable); }
-	 */
+	public List<Map<String, Long>> getSupplierWithMaxOrders(Pageable pageable) {
+		return ((SupplierService) supplierRepository).getSupplierWithMaxOrders(pageable);
+	}
 
 	/*
 	 * Create new supplier record public Supplier addNewSupplier(Supplier supplier)
@@ -99,29 +102,23 @@ public class SupplierService {
 	 * optional.get(); } else { throw new
 	 * RuntimeException("Record not found for Supplier Id: " + supId); } return
 	 * supplier; }
-	 
-
-	// update supplier record
-	public void updateSupplier(Supplier supplier) {
-		supplierRepository.save(supplier);
-	}
-
-	// delete a specific supplier
-	public void deleteSupplier(Long supId) {
-		this.supplierRepository.deleteById(supId);
-	}
-
-	public boolean isSupplierExists(Long supId) {
-		return this.supplierRepository.existsById(supId);
-	}
-
-	// pagination and sorting
-	public Page<Supplier> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
-		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
-				: Sort.by(sortField).descending();
-		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-		return this.supplierRepository.findAll(pageable);
-	}
-	*/
+	 * 
+	 * 
+	 * // update supplier record public void updateSupplier(Supplier supplier) {
+	 * supplierRepository.save(supplier); }
+	 * 
+	 * // delete a specific supplier public void deleteSupplier(Long supId) {
+	 * this.supplierRepository.deleteById(supId); }
+	 * 
+	 * public boolean isSupplierExists(Long supId) { return
+	 * this.supplierRepository.existsById(supId); }
+	 * 
+	 * // pagination and sorting public Page<Supplier> findPaginated(int pageNo, int
+	 * pageSize, String sortField, String sortDirection) { Sort sort =
+	 * sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+	 * Sort.by(sortField).ascending() : Sort.by(sortField).descending(); Pageable
+	 * pageable = PageRequest.of(pageNo - 1, pageSize, sort); return
+	 * this.supplierRepository.findAll(pageable); }
+	 */
 
 }

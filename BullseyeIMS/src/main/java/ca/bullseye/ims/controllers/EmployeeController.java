@@ -21,6 +21,8 @@ import ca.bullseye.ims.model.Employee;
 
 import ca.bullseye.ims.services.EmployeeService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class EmployeeController {
 
@@ -48,78 +50,95 @@ public class EmployeeController {
 
 	@GetMapping("/employee")
 	public String getEmployeePage(@RequestParam(value = "empId", required = false) Long empId,
-								  @RequestParam(value = "search", required = false) String search,
-								  @RequestParam(defaultValue = "empFirstName") String sort, @RequestParam(defaultValue = "1") int page,
-			                      @RequestParam(defaultValue = "15") int size, 
-			                      @RequestParam(defaultValue = "asc") String direction,
-			                      Model model) {
-		if (empId != null) {
-			Employee employee = employeeService.getEmployeeById(empId)
-					.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
-			model.addAttribute("employee", employee);
-			return "employee-info";
-		}
+			@RequestParam(value = "search", required = false) String search,
+			@RequestParam(defaultValue = "empFirstName") String sort, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "15") int size, @RequestParam(defaultValue = "asc") String direction,
+			Model model, HttpServletRequest request) {
+		if (request.getSession().getAttribute("loggedIn") != null) {
+			if (empId != null) {
+				Employee employee = employeeService.getEmployeeById(empId)
+						.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
+				model.addAttribute("employee", employee);
+				return "employee-info";
+			}
 
-		Sort.Order sortOrder = new Sort.Order(Sort.Direction.fromString(direction), sort).ignoreCase();
-		PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by(sortOrder));
+			Sort.Order sortOrder = new Sort.Order(Sort.Direction.fromString(direction), sort).ignoreCase();
+			PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by(sortOrder));
 
-		Page<Employee> employeePage;
-		if (search != null && !search.isBlank()) {
-			employeePage = employeeService.getEmployeesBySearchValue(search, pageRequest);
-		} else {
-			employeePage = employeeService.getAllEmployees(pageRequest);
+			Page<Employee> employeePage;
+			if (search != null && !search.isBlank()) {
+				employeePage = employeeService.getEmployeesBySearchValue(search, pageRequest);
+			} else {
+				employeePage = employeeService.getAllEmployees(pageRequest);
+			}
+			model.addAttribute("currentPage", page);
+			model.addAttribute("pageSize", size);
+			model.addAttribute("totalPages", employeePage.getTotalPages());
+			model.addAttribute("employee", employeePage.getContent());
+			model.addAttribute("empDepartment", empDepartment);
+			model.addAttribute("empJobRole", empJobRole);
+			return "employee";
 		}
-		model.addAttribute("currentPage", page);
-		model.addAttribute("pageSize", size);
-		model.addAttribute("totalPages", employeePage.getTotalPages());
-		model.addAttribute("employee", employeePage.getContent());
-		model.addAttribute("empDepartment", empDepartment);
-		model.addAttribute("empJobRole", empJobRole);
-		return "employee";
+		return "login";
 	}
 
 	@GetMapping("/addEmployee")
-	public String getAddEmployeePage(Model model) {
-		model.addAttribute("pageTitle", "Create Employee");
-		model.addAttribute("employee", new Employee());
-		model.addAttribute("empDepartment", empDepartment);
-		model.addAttribute("empJobRole", empJobRole);
-		return "employee-edit";
-	}
-
-	@GetMapping("/updateEmployee")
-	public String getUpdateEmployeePage(@RequestParam Long empId, Model model) {
-		Employee existingEmployee = employeeService.getEmployeeById(empId)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found."));
-		model.addAttribute("pageTitle", "Edit Employee");
-		model.addAttribute("employee", existingEmployee);
-		model.addAttribute("empDepartment", empDepartment);
-		model.addAttribute("empJobRole", empJobRole);
-		return "employee-edit";
-	}
-
-	@PostMapping("/saveEmployee")
-	public String saveEmployee(@Valid @ModelAttribute Employee employee, Errors errors, Model model) {
-		if (errors.hasErrors()) {
-			model.addAttribute("pageTitle", (employee.getEmpId() != null ? "Update" : "Create") + " Employee");
+	public String getAddEmployeePage(Model model, HttpServletRequest request) {
+		if (request.getSession().getAttribute("loggedIn") != null) {
+			model.addAttribute("pageTitle", "Create Employee");
+			model.addAttribute("employee", new Employee());
 			model.addAttribute("empDepartment", empDepartment);
 			model.addAttribute("empJobRole", empJobRole);
 			return "employee-edit";
-		} else {
-			employeeService.saveEmployee(employee);
-			return "redirect:/employee";
 		}
+		return "login";
+	}
+
+	@GetMapping("/updateEmployee")
+	public String getUpdateEmployeePage(@RequestParam Long empId, Model model, HttpServletRequest request) {
+		if (request.getSession().getAttribute("loggedIn") != null) {
+			Employee existingEmployee = employeeService.getEmployeeById(empId)
+					.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found."));
+			model.addAttribute("pageTitle", "Edit Employee");
+			model.addAttribute("employee", existingEmployee);
+			model.addAttribute("empDepartment", empDepartment);
+			model.addAttribute("empJobRole", empJobRole);
+			return "employee-edit";
+		}
+		return "login";
+	}
+
+	@PostMapping("/saveEmployee")
+	public String saveEmployee(@Valid @ModelAttribute Employee employee, Errors errors, Model model,
+			HttpServletRequest request) {
+		if (request.getSession().getAttribute("loggedIn") != null) {
+			if (errors.hasErrors()) {
+				model.addAttribute("pageTitle", (employee.getEmpId() != null ? "Update" : "Create") + " Employee");
+				model.addAttribute("empDepartment", empDepartment);
+				model.addAttribute("empJobRole", empJobRole);
+				return "employee-edit";
+			} else {
+				employeeService.saveEmployee(employee);
+				return "redirect:/employee";
+			}
+		}
+		return "login";
 	}
 
 	@GetMapping("/deleteEmployee")
-	public String deleteEmployee(@RequestParam Long empId, Model model) {
-		if (!employeeService.isEmployeeExists(empId)) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found.");
-		}
+	public String deleteEmployee(@RequestParam Long empId, Model model, HttpServletRequest request) {
+		if (request.getSession().getAttribute("loggedIn") != null) {
+			if (!employeeService.isEmployeeExists(empId)) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found.");
+			}
 
-		employeeService.deleteEmployeeById(empId);
-		return "redirect:/employee";
+			employeeService.deleteEmployeeById(empId);
+			return "redirect:/employee";
+		}
+		return "login";
 	}
+	
+	
 
 	/*
 	 * // display list of employee

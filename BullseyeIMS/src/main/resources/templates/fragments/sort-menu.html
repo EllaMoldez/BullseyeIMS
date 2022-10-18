@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{components/layout :: layout(_, ~{::#contents}, _)}">
+      th:replace="~{fragments/layout :: layout(_, ~{::#contents}, _)}">
 <body>
 <div id="contents">
     <div id="sort-menu" th:fragment="sort-menu(arrayPairs)" class="dropdown" th:with="direction=${param.direction} ?: 'asc'">

@@ -1,21 +1,17 @@
 package ca.bullseye.ims.model;
 
 import java.math.BigDecimal;
-import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 
 @Entity
 @Table(name = "product")
@@ -25,44 +21,54 @@ public class Product {
 	private Long prodId;
 	
 	@NotBlank(message = "Product SKU is required.")
-	@Size(min=2, max=10)
+	@Column(name="PRODSKU")
 	private String prodSKU;
 	
 	@NotBlank(message = "Product name is required.")
+	@Column(name="PRODNAME")
 	private String prodName;
 	
 	@NotBlank(message = "Product category is required.")
+	@Column(name="PRODCATEGORY")
 	private String prodCategory;
 	
 	@NotEmpty(message = "Brand name is required.")
+	@Column(name="PRODBRAND")
 	private String prodBrand;
-
+	
+	@Column(name="PRODDESCRIPTION")
 	private String prodDescription;
 	
 	@NotNull(message = "Product size is required.")
-	private int prodSize;
+	@Column(name="PRODSIZE")
+	private String prodSize;
 	
 	@NotBlank(message = "Product color is required.")
+	@Column(name="PRODCOLOR")
 	private String prodColor;
 	
 	@NotBlank(message = "Product location is required.")
+	@Column(name="PRODLOCATION")
 	private String prodLocation;
 	
 	@Digits(integer=8, fraction=2)
 	@NotNull(message = "Product price is required.")
+	@Column(name="PRODPRICE")
 	private BigDecimal prodPrice;
 	
 	@NotBlank(message = "Product status is required.")
+	@Column(name="PRODSTATUS")
 	private String prodStatus;
 	
 	/*
 	 * @OneToMany(mappedBy = "product") private List<OrderItem> orderItems;
-	 */
-    
-	/*
-	 * @PreRemove public void preRemove() { this.orderItems.forEach(orderItem ->
-	 * orderItem.setProduct(null)); }
-	 */
+	 
+	
+	@PreRemove
+    public void preRemove() {
+        this.orderItems.forEach(orderItem -> orderItem.setProduct(null));
+    }*/
+
 	public Long getProdId() {
 		return prodId;
 	}
@@ -111,11 +117,11 @@ public class Product {
 		this.prodDescription = prodDescription;
 	}
 
-	public int getProdSize() {
+	public String getProdSize() {
 		return prodSize;
 	}
 
-	public void setProdSize(int prodSize) {
+	public void setProdSize(String prodSize) {
 		this.prodSize = prodSize;
 	}
 
@@ -157,5 +163,5 @@ public class Product {
 	 * public void setOrderItems(List<OrderItem> orderItems) { this.orderItems =
 	 * orderItems; }
 	 */
-	
+
 }

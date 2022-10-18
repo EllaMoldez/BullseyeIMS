@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{components/layout :: layout(~{::title}, ~{::#contents}, _)}">
+	th:replace="~{fragments/layout :: layout(~{::title}, ~{::#contents}, _)}">
 <head>
 <title>Bullseye IMS - Suppliers</title>
 </head>
@@ -11,19 +11,19 @@
 			<h2 class="h2">Suppliers</h2>
 			<div class="btn-toolbar gap-1">
 				<div id="sort-menu"
-					th:replace="~{components/sort-menu :: sort-menu('supName-Supplier Name, supContactPerson-Contact Person, supCountry-Country, supEmail-Email')}"></div>
+					th:replace="~{fragments/sort-menu :: sort-menu('supName-Supplier Name, supContactPerson-Contact Person, supCountry-Country, supEmail-Email')}"></div>
 				<a th:href="@{/addSupplier}"
 					class="btn btn-sm btn-outline-secondary"> <i
 					class="bi bi-plus-circle"></i>&nbsp;Add Supplier
 				</a>
 				<div
-					th:replace="~{components/export-btn-group :: export-btn-group(@{/api/customers?format=json})}"></div>
+					th:replace="~{fragments/export-btn-group :: export-btn-group(@{/api/customers?format=json})}"></div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4">
 				<div
-					th:replace="~{components/search-bar :: search-bar(@{/supplier}, _)}"></div>
+					th:replace="~{fragments/search-bar :: search-bar(@{/supplier}, _)}"></div>
 			</div>
 		</div>
 		<div class="table-responsive">
@@ -68,7 +68,7 @@
 			</table>
 		</div>
 		<div class="text-center text-secondary mb-3">
-			<div th:replace="~{components/pagination :: pagination}"></div>
+			<div th:replace="~{fragments/pagination :: pagination}"></div>
 		</div>
 	</div>
 </body>

@@ -1,17 +1,11 @@
 /*
  * package ca.bullseye.ims.model;
  * 
- * import java.math.BigDecimal; import java.util.Date;
+ * import java.util.Date; import java.util.List; import java.util.UUID;
  * 
- * import javax.persistence.*;
+ * import javax.persistence.*; import javax.validation.Valid; import
+ * javax.validation.constraints.*;
  * 
- * import javax.validation.constraints.Digits; import
- * javax.validation.constraints.NotBlank; import
- * javax.validation.constraints.NotNull;
- * 
- * import org.hibernate.annotations.OnDelete; import
- * org.hibernate.annotations.OnDeleteAction; import
- * org.springframework.format.annotation.DateTimeFormat;
  * 
  * @Entity
  * 
@@ -21,60 +15,26 @@
  * 
  * @GeneratedValue(strategy = GenerationType.IDENTITY) private Long orderId;
  * 
- * @Column(nullable = false) private String userId;
+ * @Column(nullable = false) private String oId;
  * 
- * @NotNull
+ * @Temporal(TemporalType.TIMESTAMP)
  * 
- * @DateTimeFormat(pattern = "dd/MM/yyyy") private Date orderDate;
+ * @Column(nullable = false) private Date orderCreated;
  * 
- * @NotNull private int orderQuantity;
+ * @NotNull(message = "Employee must not be null")
  * 
- * @NotNull(message = "Product is required.")
+ * @ManyToOne
  * 
- * @ManyToOne(fetch = FetchType.LAZY)
+ * @JoinColumn(name = "employee_empId") private Employee employee;
  * 
- * @JoinColumn(name = "product_id", nullable = false)
+ * @OneToMany
  * 
- * @OnDelete(action = OnDeleteAction.CASCADE) private Product product;
+ * @JoinColumn(name = "product_prodId") private Product product;
  * 
- * @NotNull(message = "Supplier is required.")
+ * @OneToOne
  * 
- * @ManyToOne(fetch = FetchType.LAZY)
+ * @JoinColumn(name = "supplier_supId") private Supplier supplier;
  * 
- * @JoinColumn(name = "supplier_id", nullable = false)
- * 
- * @OnDelete(action = OnDeleteAction.CASCADE) private Supplier supplier;
- * 
- * @NotNull(message = "Employee is required.")
- * 
- * @ManyToOne(fetch = FetchType.LAZY, optional = false)
- * 
- * @JoinColumn(name = "employee_id", nullable = false)
- * 
- * @OnDelete(action = OnDeleteAction.CASCADE) private Employee employee;
- * 
- * @NotNull(message = "Order Total Price is required.")
- * 
- * @Digits(integer = 8, fraction = 2) private BigDecimal totalPrice;
- * 
- * @NotBlank(message = "Order Status is required.") private String Status;
- * 
- * public Long getOrderId() { return orderId; }
- * 
- * public void setOrderId(Long orderId) { this.orderId = orderId; }
- * 
- * public String getUserId() { return userId; }
- * 
- * public void setUserId(String userId) { this.userId = userId; }
- * 
- * public Date getOrderDate() { return orderDate; }
- * 
- * public void setOrderDate(Date orderDate) { this.orderDate = orderDate; }
- * 
- * public int getOrderQuantity() { return orderQuantity; }
- * 
- * public void setOrderQuantity(int orderQuantity) { this.orderQuantity =
- * orderQuantity; }
  * 
  * public Product getProduct() { return product; }
  * 
@@ -84,19 +44,33 @@
  * 
  * public void setSupplier(Supplier supplier) { this.supplier = supplier; }
  * 
+ * @Size(min = 1, message = "Order must have at least one product")
+ * 
+ * @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy =
+ * "order", orphanRemoval = true) private List<@Valid OrderItem> orderItems;
+ * 
+ * @PrePersist public void prePersist() { this.oId =
+ * UUID.randomUUID().toString(); this.orderCreated = new Date(); }
+ * 
+ * public Long getOrderId() { return orderId; }
+ * 
+ * public void setOrderId(Long orderId) { this.orderId = orderId; }
+ * 
+ * public String getoId() { return oId; }
+ * 
+ * public void setoId(String oId) { this.oId = oId; }
+ * 
+ * public Date getOrderCreated() { return orderCreated; }
+ * 
+ * public void setOrderCreated(Date orderCreated) { this.orderCreated =
+ * orderCreated; }
+ * 
  * public Employee getEmployee() { return employee; }
  * 
  * public void setEmployee(Employee employee) { this.employee = employee; }
  * 
- * public BigDecimal getTotalPrice() { return totalPrice; }
+ * public List<OrderItem> getOrderItems() { return orderItems; }
  * 
- * public void setTotalPrice(BigDecimal totalPrice) { this.totalPrice =
- * totalPrice; }
- * 
- * public String getStatus() { return Status; }
- * 
- * public void setStatus(String status) { Status = status; }
- * 
- * 
- * }
+ * public void setOrderItems(List<OrderItem> orderItems) { this.orderItems =
+ * orderItems; } }
  */
