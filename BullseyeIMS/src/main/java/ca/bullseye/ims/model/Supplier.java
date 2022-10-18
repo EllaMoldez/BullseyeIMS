@@ -19,38 +19,44 @@ public class Supplier {
 	private Long supId;
 
 	@NotBlank(message = "Supplier name is required.")
+	@Column(name="SUPNAME")
 	private String supName;
 	
 	@NotBlank(message = "Supplier contact person is required.")
+	@Column(name="SUPCONTACTPERSON")
 	private String supContactPerson;
 
 	@NotBlank(message = "Supplier address is required.")
+	@Column(name="SUPADDRESS")
 	private String supAddress;
 	
 	@NotBlank(message = "Supplier city name is required.")
+	@Column(name="SUPCITY")
 	private String supCity;
 	
 	@NotBlank(message = "Supplier state or province is required.")
+	@Column(name="SUPSTATEORPROVINCE")
 	private String supStateOrProvince;
 	
 	@NotBlank(message = "Supplier postal code is required.")
+	@Column(name="SUPPOSTALCODE")
 	private String supPostalCode;
 	
 	@NotBlank(message = "Supplier country is required.")
+	@Column(name="SUPCOUNTRY")
 	private String supCountry;
 
 	@NotBlank(message = "Supplier email is required.")
 	@Email(regexp = ".+@.+\\..+", message = "Email did not match format - test@example.com")
+	@Column(name="SUPEMAIL")
 	private String supEmail;
 
 	@NotBlank(message = "Supplier contact number is required.")
+	@Column(name="SUPCONTACT")
 	private String supContact;
 	
+	@Column(name="SUPNOTES")
 	private String supNotes;
-	
-	/*
-	 * @OneToMany(mappedBy = "supplier") private List<Order> orders;
-	 */
 	
 	public Long getSupId() {
 		return supId;
@@ -140,11 +146,6 @@ public class Supplier {
 		this.supNotes = supNotes;
 	}
 	
-	/*
-	 * public List<Order> getOrders() { return orders; }
-	 * 
-	 * public void setOrders(List<Order> orders) { this.orders = orders; }
-	 */
 	
 	
 }
