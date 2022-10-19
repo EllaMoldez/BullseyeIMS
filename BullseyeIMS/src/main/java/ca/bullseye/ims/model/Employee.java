@@ -50,6 +50,17 @@ public class Employee {
 	@NotBlank(message = "Status is required.")
 	@Column(name="EMPSTATUS")
 	private String empStatus;
+	
+	@OneToMany(mappedBy = "employees", fetch = FetchType.LAZY)
+	private List<Inventory> inventoryItems;
+
+	public List<Inventory> getInventoryItems() {
+		return inventoryItems;
+	}
+
+	public void setInventoryItems(List<Inventory> inventoryItems) {
+		this.inventoryItems = inventoryItems;
+	}
 
 	public Employee() {
 		super();

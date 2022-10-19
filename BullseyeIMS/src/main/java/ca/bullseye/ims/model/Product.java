@@ -1,12 +1,15 @@
 package ca.bullseye.ims.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -19,55 +22,57 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long prodId;
-	
+
 	@NotBlank(message = "Product SKU is required.")
-	@Column(name="PRODSKU")
+	@Column(name = "PRODSKU")
 	private String prodSKU;
-	
+
 	@NotBlank(message = "Product name is required.")
-	@Column(name="PRODNAME")
+	@Column(name = "PRODNAME")
 	private String prodName;
-	
+
 	@NotBlank(message = "Product category is required.")
-	@Column(name="PRODCATEGORY")
+	@Column(name = "PRODCATEGORY")
 	private String prodCategory;
-	
+
 	@NotEmpty(message = "Brand name is required.")
-	@Column(name="PRODBRAND")
+	@Column(name = "PRODBRAND")
 	private String prodBrand;
-	
-	@Column(name="PRODDESCRIPTION")
+
+	@Column(name = "PRODDESCRIPTION")
 	private String prodDescription;
-	
+
 	@NotNull(message = "Product size is required.")
-	@Column(name="PRODSIZE")
+	@Column(name = "PRODSIZE")
 	private String prodSize;
-	
+
 	@NotBlank(message = "Product color is required.")
-	@Column(name="PRODCOLOR")
+	@Column(name = "PRODCOLOR")
 	private String prodColor;
-	
+
 	@NotBlank(message = "Product location is required.")
-	@Column(name="PRODLOCATION")
+	@Column(name = "PRODLOCATION")
 	private String prodLocation;
-	
-	@Digits(integer=8, fraction=2)
+
+	@Digits(integer = 8, fraction = 2)
 	@NotNull(message = "Product price is required.")
-	@Column(name="PRODPRICE")
+	@Column(name = "PRODPRICE")
 	private BigDecimal prodPrice;
-	
+
 	@NotBlank(message = "Product status is required.")
-	@Column(name="PRODSTATUS")
+	@Column(name = "PRODSTATUS")
 	private String prodStatus;
+
+	@OneToMany(mappedBy = "products", fetch = FetchType.LAZY)
+	private List<Inventory> inventoryItems;
 	
-	/*
-	 * @OneToMany(mappedBy = "product") private List<OrderItem> orderItems;
-	 
-	
-	@PreRemove
-    public void preRemove() {
-        this.orderItems.forEach(orderItem -> orderItem.setProduct(null));
-    }*/
+//	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+//	private List<Order> orderItems;
+
+//	@PreRemove
+//    public void preRemove() {
+//        this.orderItems.forEach(orderItem -> orderItem.setProduct(null));
+//    }
 
 	public Long getProdId() {
 		return prodId;
@@ -157,11 +162,13 @@ public class Product {
 		this.prodStatus = prodStatus;
 	}
 
-	/*
-	 * public List<OrderItem> getOrderItems() { return orderItems; }
-	 * 
-	 * public void setOrderItems(List<OrderItem> orderItems) { this.orderItems =
-	 * orderItems; }
-	 */
+	public List<Inventory> getInventoryItems() {
+		return inventoryItems;
+	}
+
+	public void setInventoryItems(List<Inventory> inventoryItems) {
+		this.inventoryItems = inventoryItems;
+	}
+	 
 
 }
