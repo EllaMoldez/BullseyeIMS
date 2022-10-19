@@ -20,7 +20,7 @@
  * 
  * @GeneratedValue(strategy = GenerationType.IDENTITY) private Long oItemId;
  * 
- * @NotNull(message = "Order must not be null")
+ * @NotNull(message = "Order must not be null.")
  * 
  * @ManyToOne
  * 
@@ -76,7 +76,6 @@
  * 
  * public void setTotalPrice(BigDecimal totalPrice) { this.totalPrice =
  * totalPrice; }
- * 
  * 
  * }
  */

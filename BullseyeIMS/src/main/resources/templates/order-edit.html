@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout(~{::title}, ~{::#contents}, _)}">
+<head>
+<title th:text="${pageTitle} ?: _">Order</title>
+</head>
+<body>
+	<div id="contents">
+		<div
+			class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+			<h2 class="h2" th:text="${pageTitle} ?: _">Order</h2>
+		</div>
+		<div class="row mt-2 mb-5">
+			<form th:action="@{/saveOrder}" th:object="${order}"
+				th:with="errors=${#fields.hasAnyErrors()}" method="post"
+				class="needs-validation" novalidate="">
+				<input type="hidden" th:field="*{OrderId}">
+
+				<div class="row g-3">
+					<div class="col-sm-6">
+						<label for="oId" class="form-label">Order ID</label> <input
+							type="text" class="form-control"
+							th:classappend="${errors} and not ${#fields.hasErrors('oId')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="oId" th:field="*{oId}"
+							placeholder="" value="" required="">
+						<div class="invalid-feedback">Order ID is required.</div>
+					</div>
+
+
+					<div class="col-sm-6">
+						<label for="orderCreated" class="form-label">Order Date</label> <input
+							type="text" class="form-control"
+							th:classappend="${errors} and not ${#fields.hasErrors('orderCreated')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="orderCreated"
+							th:field="*{orderCreated}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Date ordered is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="orderByEmployee" class="form-label">Ordered By
+							(Employee Name)</label> <input type="text" class="form-control"
+							th:classappend="${errors} and not ${#fields.hasErrors('orderByEmployee')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="orderByEmployee"
+							th:field="*{orderByEmployee}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Employee Name is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="orderedProduct" class="form-label">Ordered By
+							Product SKU</label> <input type="text" class="form-control"
+							th:classappend="${errors} and not ${#fields.hasErrors('orderedProduct')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="orderedProduct"
+							th:field="*{orderedProduct}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Product SKU is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="orderQuantity" class="form-label">Quantity</label> <input
+							type="text" class="form-control"
+							th:classappend="${errors} and not ${#fields.hasErrors('orderQuantity')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="orderQuantity"
+							th:field="*{orderQuantity}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Quantity is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="orderPrice" class="form-label">Product Price</label> <input
+							type="text" class="form-control"
+							th:classappend="${errors} and not ${#fields.hasErrors('orderPrice')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="orderPrice"
+							th:field="*{orderPrice}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Product price is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="totalPrice" class="form-label">Total Price</label> <input
+							type="text" class="form-control"
+							th:classappend="${errors} and not ${#fields.hasErrors('totalPrice')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="totalPrice"
+							th:field="*{totalPrice}" placeholder="" value="" required="">
+						<div class="invalid-feedback">Order Total Price is required.</div>
+					</div>
+
+					<div class="col-sm-6">
+						<label for="orderStatus" class="form-label">Status
+							&nbsp;&nbsp;</label> <input type="radio"
+							th:classappend="${errors} and not ${#fields.hasErrors('orderStatus')} ? 'is-valid'"
+							th:errorclass="is-invalid" id="orderStatus"
+							th:field="*{orderStatus}" value="In-Process" /> In-Process
+						&nbsp;&nbsp; <input type="radio" th:field="*{orderStatus}"
+							value="Pending" /> Pending <input type="radio"
+							th:field="*{orderStatus}" value="Completed" /> Completed
+						<div class="invalid-feedback">Order status is required.</div>
+					</div>
+
+					<div class="col-sm-12">
+						<label for="orderNote" class="form-label">Notes <span
+							class="text-muted">(Optional)</span></label>
+						<textarea class="form-control" rows="2" th:field="*{orderNote}"></textarea>
+					</div>
+				</div>
+
+				<hr class="my-4">
+				<div class="row mb-2">
+					<p>
+						<button class="btn btn-secondary" type="submit">Save</button>
+						<a id="backButton" name="backButton" href="/order"
+							onclick="window.history.go(-1)" class="btn btn-secondary px-4">Back</a>
+					</p>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

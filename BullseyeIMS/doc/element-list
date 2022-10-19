@@ -1,0 +1,7 @@
+ca.bullseye.ims
+ca.bullseye.ims.controllers
+ca.bullseye.ims.dto
+ca.bullseye.ims.exceptions
+ca.bullseye.ims.model
+ca.bullseye.ims.repositories
+ca.bullseye.ims.services

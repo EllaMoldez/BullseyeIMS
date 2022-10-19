@@ -58,20 +58,11 @@ public class Supplier {
 	@Column(name="SUPNOTES")
 	private String supNotes;
 	
-	@OneToMany(mappedBy = "suppliers", fetch = FetchType.LAZY)
-	private List<Inventory> inventoryItems;
+	/*
+	 * @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY) private
+	 * List<Orders> orders;
+	 */
 	
-//	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
-//	private List<Order> orderItems;
-	
-	public List<Inventory> getInventoryItems() {
-		return inventoryItems;
-	}
-
-	public void setInventoryItems(List<Inventory> inventoryItems) {
-		this.inventoryItems = inventoryItems;
-	}
-
 	public Long getSupId() {
 		return supId;
 	}

@@ -57,7 +57,7 @@ public class HomeController {
 				message = "";
 				model.addAttribute("error", message);
 				request.getSession().setAttribute("loggedIn", true);
-				return "redirect:/employee";
+				return "redirect:/product";
 			}
 			message = "Invalid username or password";
 			model.addAttribute("error", message);

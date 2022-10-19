@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ca.bullseye.ims"},{"l":"ca.bullseye.ims.controllers"},{"l":"ca.bullseye.ims.dto"},{"l":"ca.bullseye.ims.exceptions"},{"l":"ca.bullseye.ims.model"},{"l":"ca.bullseye.ims.repositories"},{"l":"ca.bullseye.ims.services"}];updateSearchResults();

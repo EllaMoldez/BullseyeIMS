@@ -3,6 +3,7 @@ package ca.bullseye.ims.model;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,58 +23,52 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long prodId;
-
-	@NotBlank(message = "Product SKU is required.")
-	@Column(name = "PRODSKU")
-	private String prodSKU;
-
-	@NotBlank(message = "Product name is required.")
-	@Column(name = "PRODNAME")
-	private String prodName;
-
-	@NotBlank(message = "Product category is required.")
-	@Column(name = "PRODCATEGORY")
-	private String prodCategory;
-
-	@NotEmpty(message = "Brand name is required.")
-	@Column(name = "PRODBRAND")
-	private String prodBrand;
-
-	@Column(name = "PRODDESCRIPTION")
-	private String prodDescription;
-
-	@NotNull(message = "Product size is required.")
-	@Column(name = "PRODSIZE")
-	private String prodSize;
-
-	@NotBlank(message = "Product color is required.")
-	@Column(name = "PRODCOLOR")
-	private String prodColor;
-
-	@NotBlank(message = "Product location is required.")
-	@Column(name = "PRODLOCATION")
-	private String prodLocation;
-
-	@Digits(integer = 8, fraction = 2)
-	@NotNull(message = "Product price is required.")
-	@Column(name = "PRODPRICE")
-	private BigDecimal prodPrice;
-
-	@NotBlank(message = "Product status is required.")
-	@Column(name = "PRODSTATUS")
-	private String prodStatus;
-
-	@OneToMany(mappedBy = "products", fetch = FetchType.LAZY)
-	private List<Inventory> inventoryItems;
 	
-//	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-//	private List<Order> orderItems;
-
-//	@PreRemove
-//    public void preRemove() {
-//        this.orderItems.forEach(orderItem -> orderItem.setProduct(null));
-//    }
-
+	@NotBlank(message = "Product SKU is required.")
+	@Column(name="PRODSKU")
+	private String prodSKU;
+	
+	@NotBlank(message = "Product name is required.")
+	@Column(name="PRODNAME")
+	private String prodName;
+	
+	@NotBlank(message = "Product category is required.")
+	@Column(name="PRODCATEGORY")
+	private String prodCategory;
+	
+	@NotEmpty(message = "Brand name is required.")
+	@Column(name="PRODBRAND")
+	private String prodBrand;
+	
+	@Column(name="PRODDESCRIPTION")
+	private String prodDescription;
+	
+	@NotNull(message = "Product size is required.")
+	@Column(name="PRODSIZE")
+	private String prodSize;
+	
+	@NotBlank(message = "Product color is required.")
+	@Column(name="PRODCOLOR")
+	private String prodColor;
+	
+	@NotBlank(message = "Product location is required.")
+	@Column(name="PRODLOCATION")
+	private String prodLocation;
+	
+	@Digits(integer=8, fraction=2)
+	@NotNull(message = "Product price is required.")
+	@Column(name="PRODPRICE")
+	private BigDecimal prodPrice;
+	
+	@NotBlank(message = "Product status is required.")
+	@Column(name="PRODSTATUS")
+	private String prodStatus;
+	
+	/*
+	 * @OneToMany(mappedBy = "product", fetch = FetchType.LAZY) private List<Orders>
+	 * orders;
+	 */
+	
 	public Long getProdId() {
 		return prodId;
 	}
@@ -162,13 +157,5 @@ public class Product {
 		this.prodStatus = prodStatus;
 	}
 
-	public List<Inventory> getInventoryItems() {
-		return inventoryItems;
-	}
-
-	public void setInventoryItems(List<Inventory> inventoryItems) {
-		this.inventoryItems = inventoryItems;
-	}
-	 
-
+	
 }
