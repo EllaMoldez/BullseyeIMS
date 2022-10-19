@@ -1,0 +1,173 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background: #FFFFFF;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-family: sans-serif, 'Montserrat';
+	height: 100vh;
+	margin: -20px 0 50px;
+	overflow: hidden; /* Hide scrollbars */
+}
+
+p {
+	font-size: 14px;
+	font-weight: 100;
+	line-height: 20px;
+	letter-spacing: 0.5px;
+	margin: 20px 12px 20px;
+}
+
+h1 {
+	font-weight: bold;
+}
+
+h5 {
+	font-family: sans-serif, 'Montserrat';
+	margin-bottom: 20px;
+}
+
+.container {
+	background-color: #FFFFFF;
+	border-radius: 5px;
+  	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	position: relative;
+	overflow: hidden;
+	width: 768px;
+	max-width: 100%;
+	min-height: 480px;
+	margin-top: 100px;
+}
+
+.form-container {
+	position: absolute;
+	top: 0;
+	height: 100%;
+}
+
+.log-in-container {
+	right: 0;
+	width: 50%;
+	z-index: 2;
+}
+
+.overlay-container {
+	position: absolute;
+	top: 0;
+	right: 50%;
+	width: 50%;
+	height: 100%;
+}
+
+.overlay {
+	background: #31708f;
+	background: -webkit-linear-gradient(to right, #31708f, #64B5F6);
+	background: linear-gradient(to right, #31708f, #64B5F6);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 0 0;
+	color: #FFFFFF;
+	position: relative;
+	left: -100%;
+	height: 100%;
+	width: 200%;
+}
+
+.overlay-panel {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 4px;
+	text-align: center;
+	top: 0;
+	height: 100%;
+	width: 50%;
+}
+
+.overlay-left {
+	right: 0;
+}
+
+.bottom-container{
+	margin-top: 40px;
+}
+
+.bottom-container p{
+	font-size: 11px;
+	color: #1976D2;
+
+}
+
+.login-form {
+    max-width: 380px;
+    padding: 10px;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 20px;
+	height: 100%;
+	text-align: center;
+}
+
+.login-form .login-form-heading,
+.login-form .checkbox {
+    margin-bottom: 20px;
+}
+
+.login-form .checkbox {
+    font-weight: normal;
+}
+
+.form-group{
+	width: 85%;
+}
+
+.login-form .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.login-form input{
+    padding: 20px 25px;
+	margin: 15px 0;
+	width: 100%;
+}
+
+.login-form .form-control:focus {
+    z-index: 2;
+}
+
+.login-form button {
+    margin-top: 2px;
+    width: 100%;
+    background: #1565C0;
+}
+
+.has-error {
+    color: red;
+}
+
+img{
+	width: 90%;
+	padding: 4px 0;
+}
+
+.form-container p{
+	font-size: 12px;
+	color: grey;
+	margin: 1px;
+}
