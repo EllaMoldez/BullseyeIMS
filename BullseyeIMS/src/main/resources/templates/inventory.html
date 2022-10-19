@@ -24,8 +24,8 @@
 						<th scope="col">Product SKU</th>
 						<th scope="col">Name</th>
 						<th scope="col">Category</th>
-						<th scope="col">Quantity</th>
 						<th scope="col">Total Price</th>
+						<th scope="col">Quantity</th>
 						<th scope="col">Supplier</th>
 						<th scope="col">Status</th>
 					</tr>
@@ -34,14 +34,16 @@
 					<tr th:if="${#lists.isEmpty(inventory)}">
 						<td colspan="8">No products available.</td>
 					</tr>
-					<tr th:each="inventory, status : ${inventory}">
+					<tr th:each="product, status : ${productList}">
 						<td th:text="${status.count + ((currentPage - 1) * pageSize)}">1</td>
-						<td th:text="${inventory.prodSKU}">SKU</td>
-						<td th:text="${inventory.prodName}">Name</td>
-						<td th:text="${inventory.prodCategory}">Category</td>
-						<!-- <td th:text="${inventory.order.quantity}">Quantity</td> -->
-						<td th:text="${#numbers.formatDecimal(inventory.prodPrice, 1, 'DEFAULT', 2, 'DEFAULT')}">Price</td>
-						<td th:text="${inventory.supName}">Supplier Name</td>			
+						<td th:text="${product.prodSKU}">SKU</td>
+						<td th:text="${product.prodName}">Name</td>
+						<td th:text="${product.prodCategory}">Category</td>
+						<td th:text="${#numbers.formatDecimal(product.prodPrice, 1, 'DEFAULT', 2, 'DEFAULT')}">Price</td>
+
+						<td th:each="order, status : ${orderList}" th:text="${order.orderQuantity}">Quantity</td>
+						
+						<!-- <td th:text="${inventory.supName}">Supplier Name</td>	 -->		
 						<!-- <td th:text="${inventory.order.status}">Status</td> -->
 						
 					</tr>

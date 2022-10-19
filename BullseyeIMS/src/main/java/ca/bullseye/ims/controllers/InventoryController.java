@@ -5,33 +5,76 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ca.bullseye.ims.model.Employee;
 import ca.bullseye.ims.model.Inventory;
+import ca.bullseye.ims.model.Orders;
 import ca.bullseye.ims.model.Product;
 import ca.bullseye.ims.model.Supplier;
+import ca.bullseye.ims.services.EmployeeService;
 import ca.bullseye.ims.services.InventoryService;
+import ca.bullseye.ims.services.OrderService;
+import ca.bullseye.ims.services.ProductService;
 
 @Controller
 public class InventoryController {
 
 	@Autowired
-	private InventoryService inventoryService;
+	private EmployeeService employeeService;
+	@Autowired
+	private ProductService productService;
+	@Autowired
+	private OrderService orderService;
+
+	private List<Employee> employeeList;
+	private List<Product> productList;
+	private List<Orders> orderList;
+
+	@ModelAttribute("currentInventories")
+	public Inventory currentInventories() {
+		return new Inventory();
+	}
+	
+	@ModelAttribute("orderList")
+	public List<Orders> populateOrderList() {
+		orderList = orderService.getAllOrders();
+		return orderList;
+	}
+
+	@ModelAttribute("productList")
+	public List<Product> populateProductList() {
+		productList = productService.getAllProducts();
+		return productList;
+	}
+
+	@ModelAttribute("employeeList")
+	public List<Employee> populateEmployeeList() {
+		employeeList = employeeService.getAllEmployees();
+		return employeeList;
+	}
 
 	@GetMapping("/inventory")
-	public String getInventoryPage(Model model, HttpServletRequest request) {
+	public String getInventoryPage(@RequestParam(value = "search", required = false) String search,
+			@RequestParam(defaultValue = "inventoryId") String sort, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "15") int size, @RequestParam(defaultValue = "asc") String direction,
+			Model model, HttpServletRequest request) {
 		if (request.getSession().getAttribute("loggedIn") != null) {
-			List<Inventory> inventoryList = inventoryService.getAllInventories();
-//			List<Product> productList = inventoryService.getAllProducts();
-//			List<Employee> employeeList = inventoryService.getAllEmployees();
-//			List<Supplier> supplierList = inventoryService.getAllSuppliers();
-			model.addAttribute("inventoryList", inventoryList);
-//			model.addAttribute("productList", productList);
-//			model.addAttribute("employeeList", employeeList);
-//			model.addAttribute("supplierList", supplierList);
+
+			model.addAttribute("currentPage", page);
+			model.addAttribute("pageSize", size);
+			model.addAttribute("employeeList", employeeList);
+			model.addAttribute("productList", productList);
+			model.addAttribute("orderList", orderList);
+		
 			return "inventory";
 		}
 		return "login";
