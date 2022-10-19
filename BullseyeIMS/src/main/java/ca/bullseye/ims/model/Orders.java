@@ -16,6 +16,11 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * This class represents an order.
+ * 
+ */
+
 @Entity
 @Table(name = "orders")
 public class Orders {
@@ -25,43 +30,42 @@ public class Orders {
 	private Long orderId;
 
 	@NotBlank(message = "Order Id is required.")
-	@Column(name="OID")
+	@Column(name = "OID")
 	private String oId;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Column(name="ORDERCREATED")
+	@Column(name = "ORDERCREATED")
 	private Date orderCreated;
 
 	@NotBlank(message = "Employee name is required.")
-	@Column(name="ORDERBYEMPLOYEE")
+	@Column(name = "ORDERBYEMPLOYEE")
 	private String orderByEmployee;
-	
+
 	@NotBlank(message = "Product is required.")
-	@Column(name="ORDEREDPRODUCT")
+	@Column(name = "ORDEREDPRODUCT")
 	private String orderedProduct;
-	
+
 	@NotNull(message = "Total product price must not be null.")
 	@Digits(integer = 19, fraction = 2)
-	@Column(name="TOTALPRICE")
+	@Column(name = "TOTALPRICE")
 	private BigDecimal totalPrice;
-	
+
 	@NotNull(message = "Quantity must not be null.")
-	@Column(name="ORDERQUANTITY")
+	@Column(name = "ORDERQUANTITY")
 	private int orderQuantity;
 
 	@NotNull(message = "Product price must not be null.")
 	@Digits(integer = 19, fraction = 2)
-	@Column(name="ORDERPRICE")
+	@Column(name = "ORDERPRICE")
 	private BigDecimal orderPrice;
-	
+
 	@NotBlank(message = "Order status is required.")
-	@Column(name="ORDERSTATUS")
+	@Column(name = "ORDERSTATUS")
 	private String orderStatus;
-	
-	@Column(name="ORDERNOTE")
+
+	@Column(name = "ORDERNOTE")
 	private String orderNote;
 
-	
 	public Long getOrderId() {
 		return orderId;
 	}
@@ -133,7 +137,7 @@ public class Orders {
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
 	}
-	
+
 	public String getOrderNote() {
 		return orderNote;
 	}
@@ -142,7 +146,6 @@ public class Orders {
 		this.orderNote = orderNote;
 	}
 
-	
 	/*
 	 * @NotNull(message = "Employee must not be null")
 	 * 
@@ -158,6 +161,5 @@ public class Orders {
 	 * 
 	 * @JoinColumn(name = "supId") private List<Supplier> supplier;
 	 */
-	
 
 }

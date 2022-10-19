@@ -18,14 +18,13 @@
 
 				<div class="row g-3">
 					<div class="col-sm-6">
-						<label for="oId" class="form-label">Order ID</label> <input
+						<label for="oId" class="form-label">Order ID <span class="text-muted">(e.g. BE-STR1-001)</span></label> <input
 							type="text" class="form-control"
 							th:classappend="${errors} and not ${#fields.hasErrors('oId')} ? 'is-valid'"
 							th:errorclass="is-invalid" id="oId" th:field="*{oId}"
 							placeholder="" value="" required="">
 						<div class="invalid-feedback">Order ID is required.</div>
 					</div>
-
 
 					<div class="col-sm-6">
 						<label for="orderCreated" class="form-label">Order Date</label> <input
@@ -38,7 +37,7 @@
 
 					<div class="col-sm-6">
 						<label for="orderByEmployee" class="form-label">Ordered By
-							(Employee Name)</label> <input type="text" class="form-control"
+							<span class="text-muted">(Employee Name) </span></label> <input type="text" class="form-control"
 							th:classappend="${errors} and not ${#fields.hasErrors('orderByEmployee')} ? 'is-valid'"
 							th:errorclass="is-invalid" id="orderByEmployee"
 							th:field="*{orderByEmployee}" placeholder="" value="" required="">
@@ -46,8 +45,7 @@
 					</div>
 
 					<div class="col-sm-6">
-						<label for="orderedProduct" class="form-label">Ordered By
-							Product SKU</label> <input type="text" class="form-control"
+						<label for="orderedProduct" class="form-label">Product SKU</label> <input type="text" class="form-control"
 							th:classappend="${errors} and not ${#fields.hasErrors('orderedProduct')} ? 'is-valid'"
 							th:errorclass="is-invalid" id="orderedProduct"
 							th:field="*{orderedProduct}" placeholder="" value="" required="">

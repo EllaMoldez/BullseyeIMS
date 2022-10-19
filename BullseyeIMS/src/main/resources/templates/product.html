@@ -59,11 +59,16 @@
 						<td th:text="${#numbers.formatDecimal(product.prodPrice, 1, 'DEFAULT', 2, 'DEFAULT')}">Price</td>
 						<td th:text="${product.prodStatus}">Status</td>
 						
-						<td><a th:href="@{/updateProduct(prodId=${product.prodId})}"
-							class="link-secondary"> <i class="bi bi-pencil-fill"></i></a>&nbsp;
-							<a data-link-type="confirmDelete"
-							th:href="@{/deleteProduct(prodId=${product.prodId})}"
-							class="link-secondary"><i class="bi bi-trash-fill"></i></a></td>
+						<td>
+						<a th:href="@{/createOrder(prodId=${product.prodId})}" class="link-secondary" 
+						data-toggle="tooltip" title="Add product to order">
+                        	<i class="bi bi-cart-fill"></i></a>&nbsp;
+						<a th:href="@{/updateProduct(prodId=${product.prodId})}"class="link-secondary" 
+						data-toggle="tooltip" title="Edit product details"> 
+							<i class="bi bi-pencil-fill"></i></a>&nbsp;
+						<a data-link-type="confirmDelete"th:href="@{/deleteProduct(prodId=${product.prodId})}" 
+						class="link-secondary" data-toggle="tooltip" title="Delete product">
+							<i class="bi bi-trash-fill"></i></a></td>
 					</tr>
 				</tbody>
 			</table>

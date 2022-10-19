@@ -15,7 +15,7 @@
             </h6> -->
         </div>
         <div class="btn-toolbar gap-1">
-            <div id="sort-menu" th:replace="~{fragments/sort-menu :: sort-menu('oId-Order Number, orderCreated-Date Created, employee-Employee')}"></div>
+            <div id="sort-menu" th:replace="~{fragments/sort-menu :: sort-menu('oId-Order Number, orderCreated-Date Created, orderByEmployee-Employee')}"></div>
             <a th:href="@{/addOrder}"
 					class="btn btn-sm btn-outline-secondary mx-1"> <i
 					class="bi bi-plus-circle"></i>&nbsp;Add Order
@@ -35,11 +35,12 @@
                 <th scope="col">#</th>
                 <th scope="col">Order No.</th>
                 <th scope="col">Order Date/Time</th>
-                <th scope="col">Employee Name</th>
+                <th scope="col">Ordered By</th>
                 <th scope="col">Product SKU</th>
                 <th scope="col">Product Price</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Total Price</th>
+                <th scope="col">Status</th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
@@ -57,13 +58,7 @@
                 <td th:text="${order.orderQuantity}">Quantity</td>
                 <td th:text="${order.totalPrice}">Total Price</td>
                 <td th:text="${order.orderStatus}">Status</td>
-                <!-- <td th:text="${#dates.format(order.oId, 'dd MMMM yyyy / HH:mm')}">Date Ordered</td> -->
-                <!-- <td th:text="|${order.employee.empFirstName} ${order.employee.empLastName}">Employee Name</td> -->
-                <!-- <td th:text="${#aggregates.sum(order.orderItems.![totalPrice])}">1000</td> -->
                 <td>
-                    <!-- <a th:href="@{/order(orderId=${order.orderId})}" class="link-secondary">
-                    	<i class="bi bi-info-circle-fill"></i></a>
-                    &nbsp; -->
                     <a onclick="updateOrderHandler(event)" th:href="@{/updateOrder(orderId=${order.orderId})}"
                        class="link-secondary"><i class="bi bi-pencil-fill"></i></a>
                     &nbsp;

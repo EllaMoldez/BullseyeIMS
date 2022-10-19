@@ -1,9 +1,16 @@
 package ca.bullseye.ims.model;
 
-import java.util.List;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
+
+/** 
+ * 
+ * This class represents an employee with an access to Bullseye IMS.
+ * An employee belongs to a department with one job role.
+ * 
+ */
+
 
 @Entity
 @Table(name = "employee")

@@ -64,11 +64,6 @@ public class Product {
 	@Column(name="PRODSTATUS")
 	private String prodStatus;
 	
-	/*
-	 * @OneToMany(mappedBy = "product", fetch = FetchType.LAZY) private List<Orders>
-	 * orders;
-	 */
-	
 	public Long getProdId() {
 		return prodId;
 	}

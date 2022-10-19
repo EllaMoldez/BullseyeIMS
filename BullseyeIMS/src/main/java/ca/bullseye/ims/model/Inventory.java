@@ -40,6 +40,18 @@ public class Inventory {
 	
 	@Column(name="prodStatus")
 	private String prodStatus;
+	
+	@Column(name="INVENTORYTOTALPRICE")
+	private String inventoryTotalPrice;
+	
+	@Column(name="INVENTORYIDEALQUANTITY")
+	private String inventoryIdealQuantity;
+	
+	@Column(name="QUANTITYAVAILABLE")
+	private String quantityAvailable;
+	
+	@Column(name="INVENTORY STATUS")
+	private String inventoryStatus;
 
 	public Long getInventoryId() {
 		return inventoryId;

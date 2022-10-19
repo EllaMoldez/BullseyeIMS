@@ -24,6 +24,7 @@ import ca.bullseye.ims.services.EmployeeService;
 import ca.bullseye.ims.services.InventoryService;
 import ca.bullseye.ims.services.OrderService;
 import ca.bullseye.ims.services.ProductService;
+import ca.bullseye.ims.services.SupplierService;
 
 @Controller
 public class InventoryController {
@@ -34,10 +35,14 @@ public class InventoryController {
 	private ProductService productService;
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private SupplierService supplierService;
 
 	private List<Employee> employeeList;
 	private List<Product> productList;
 	private List<Orders> orderList;
+	private List<Supplier> supplierList;
 
 	@ModelAttribute("currentInventories")
 	public Inventory currentInventories() {
@@ -61,12 +66,20 @@ public class InventoryController {
 		employeeList = employeeService.getAllEmployees();
 		return employeeList;
 	}
+	
+	@ModelAttribute("supplierList")
+	public List<Supplier> populateSupplierList() {
+		supplierList = supplierService.getAllSuppliers();
+		return supplierList;
+	}
 
 	@GetMapping("/inventory")
 	public String getInventoryPage(@RequestParam(value = "search", required = false) String search,
-			@RequestParam(defaultValue = "inventoryId") String sort, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "15") int size, @RequestParam(defaultValue = "asc") String direction,
-			Model model, HttpServletRequest request) {
+									@RequestParam(defaultValue = "inventoryId") String sort, 
+									@RequestParam(defaultValue = "1") int page,
+									@RequestParam(defaultValue = "15") int size, 
+									@RequestParam(defaultValue = "asc") String direction,
+									Model model, HttpServletRequest request) {
 		if (request.getSession().getAttribute("loggedIn") != null) {
 
 			model.addAttribute("currentPage", page);
@@ -74,6 +87,7 @@ public class InventoryController {
 			model.addAttribute("employeeList", employeeList);
 			model.addAttribute("productList", productList);
 			model.addAttribute("orderList", orderList);
+			model.addAttribute("supplierList", supplierList);
 		
 			return "inventory";
 		}

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{fragments/layout :: layout(~{::title}, ~{::#contents}, _)}">
 <head>
-<title>Bullseye IMS - Products</title>
+<title>Bullseye IMS - Inventory</title>
 </head>
 <body>
 	<div id="contents">
@@ -24,9 +24,9 @@
 						<th scope="col">Product SKU</th>
 						<th scope="col">Name</th>
 						<th scope="col">Category</th>
-						<th scope="col">Total Price</th>
 						<th scope="col">Quantity</th>
-						<th scope="col">Supplier</th>
+						<th scope="col">Total Price</th>
+						
 						<th scope="col">Status</th>
 					</tr>
 				</thead>
@@ -39,6 +39,7 @@
 						<td th:text="${product.prodSKU}">SKU</td>
 						<td th:text="${product.prodName}">Name</td>
 						<td th:text="${product.prodCategory}">Category</td>
+						<td></td>
 						<td th:text="${#numbers.formatDecimal(product.prodPrice, 1, 'DEFAULT', 2, 'DEFAULT')}">Price</td>
 
 						<td th:each="order, status : ${orderList}" th:text="${order.orderQuantity}">Quantity</td>
