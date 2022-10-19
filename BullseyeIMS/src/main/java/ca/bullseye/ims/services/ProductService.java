@@ -15,6 +15,7 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
 
 	/* Display all product records */
 	public List<Product> getAllProducts() {

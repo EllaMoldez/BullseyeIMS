@@ -51,8 +51,8 @@
 						<td th:text="${employee.empContact}">Contact</td>
 						<td th:text="${employee.empStatus}">Status</td>
 						
-						<td><a th:href="@{/employee(id=${employee.empId})}"
-							class="link-secondary"> <i class="bi bi-info-circle-fill"></i></a>&nbsp;
+						<td><!-- <a th:href="@{/employee(id=${employee.empId})}"
+							class="link-secondary"> <i class="bi bi-info-circle-fill"></i></a>&nbsp; -->
 							<!-- <a th:href="@{/createOrder(customerId=${employee.empId})}"
 							class="link-secondary"> <i class="bi bi-cart-fill"></i></a>&nbsp; -->
 							<a th:href="@{/updateEmployee(empId=${employee.empId})}"

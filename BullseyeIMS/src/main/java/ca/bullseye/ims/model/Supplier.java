@@ -58,6 +58,11 @@ public class Supplier {
 	@Column(name="SUPNOTES")
 	private String supNotes;
 	
+	/*
+	 * @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY) private
+	 * List<Orders> orders;
+	 */
+	
 	public Long getSupId() {
 		return supId;
 	}

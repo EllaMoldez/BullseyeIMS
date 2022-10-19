@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout(~{::title}, ~{::#contents}, _)}">
 <head>
-    <title>Orders</title>
+    <title>Bullseye IMS - Orders</title>
 </head>
 <body>
 <div id="contents">
@@ -16,7 +16,7 @@
         </div>
         <div class="btn-toolbar gap-1">
             <div id="sort-menu" th:replace="~{fragments/sort-menu :: sort-menu('oId-Order Number, orderCreated-Date Created, employee-Employee')}"></div>
-            <a th:href="@{/createOrder}"
+            <a th:href="@{/addOrder}"
 					class="btn btn-sm btn-outline-secondary mx-1"> <i
 					class="bi bi-plus-circle"></i>&nbsp;Add Order
 				</a>
@@ -25,7 +25,7 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-            <div th:replace="~{fragments/search-bar :: search-bar(@{/orders}, _)}"></div>
+            <div th:replace="~{fragments/search-bar :: search-bar(@{/order}, _)}"></div>
         </div>
     </div>
     <div class="table-responsive">
@@ -34,26 +34,36 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Order No.</th>
-                <th scope="col">Date/Time</th>
-                <th scope="col">Employee</th>
+                <th scope="col">Order Date/Time</th>
+                <th scope="col">Employee Name</th>
+                <th scope="col">Product SKU</th>
+                <th scope="col">Product Price</th>
+                <th scope="col">Quantity</th>
                 <th scope="col">Total Price</th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:if="${#lists.isEmpty(orders)}">
-                <td colspan="6">No orders recorded.</td>
+            <tr th:if="${#lists.isEmpty(order)}">
+                <td colspan="9">No orders recorded.</td>
             </tr>
             <tr th:each="order, status : ${order}">
                 <td th:text="${status.count + ((currentPage - 1) * pageSize)}">1</td>
                 <td th:text="${order.oId}">Order Id</td>
-                <td th:text="${#dates.format(order.oId, 'dd MMMM yyyy / HH:mm')}"></td>
-                <td th:text="|${order.employee.empFirstName} ${order.employee.empLastName}">Employee Name</td>
-                <td th:text="${#aggregates.sum(order.orderItems.![totalPrice])}">1000</td>
+                <td th:text="${order.orderCreated}">Order Date</td>
+                <td th:text="${order.orderByEmployee}">Employee Name</td>
+                <td th:text="${order.orderedProduct}">Product SKU</td>
+                <td th:text="${order.orderPrice}">Product Price</td>
+                <td th:text="${order.orderQuantity}">Quantity</td>
+                <td th:text="${order.totalPrice}">Total Price</td>
+                <td th:text="${order.orderStatus}">Status</td>
+                <!-- <td th:text="${#dates.format(order.oId, 'dd MMMM yyyy / HH:mm')}">Date Ordered</td> -->
+                <!-- <td th:text="|${order.employee.empFirstName} ${order.employee.empLastName}">Employee Name</td> -->
+                <!-- <td th:text="${#aggregates.sum(order.orderItems.![totalPrice])}">1000</td> -->
                 <td>
-                    <a th:href="@{/order(orderId=${order.orderId})}" class="link-secondary">
+                    <!-- <a th:href="@{/order(orderId=${order.orderId})}" class="link-secondary">
                     	<i class="bi bi-info-circle-fill"></i></a>
-                    &nbsp;
+                    &nbsp; -->
                     <a onclick="updateOrderHandler(event)" th:href="@{/updateOrder(orderId=${order.orderId})}"
                        class="link-secondary"><i class="bi bi-pencil-fill"></i></a>
                     &nbsp;

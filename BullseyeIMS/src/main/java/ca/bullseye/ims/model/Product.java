@@ -1,12 +1,16 @@
 package ca.bullseye.ims.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -61,14 +65,10 @@ public class Product {
 	private String prodStatus;
 	
 	/*
-	 * @OneToMany(mappedBy = "product") private List<OrderItem> orderItems;
-	 
+	 * @OneToMany(mappedBy = "product", fetch = FetchType.LAZY) private List<Orders>
+	 * orders;
+	 */
 	
-	@PreRemove
-    public void preRemove() {
-        this.orderItems.forEach(orderItem -> orderItem.setProduct(null));
-    }*/
-
 	public Long getProdId() {
 		return prodId;
 	}
@@ -157,11 +157,5 @@ public class Product {
 		this.prodStatus = prodStatus;
 	}
 
-	/*
-	 * public List<OrderItem> getOrderItems() { return orderItems; }
-	 * 
-	 * public void setOrderItems(List<OrderItem> orderItems) { this.orderItems =
-	 * orderItems; }
-	 */
-
+	
 }
