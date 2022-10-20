@@ -4,7 +4,11 @@ This is a group project on Inventory Management System for Bullseye
 ### Entity Relationship Diagram
 
 ### Features:
-* Create Product
+* Product
+* Employee
+* Supplier
+* Order
+* Inventory
 
 ### Tech Stack:
 * Java EE
